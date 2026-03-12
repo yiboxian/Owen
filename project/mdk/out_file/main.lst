@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  main                                                               10/03/26  19:36:16  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               12/03/26  20:08:31  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
@@ -49,48 +49,94 @@ stmt  level    source
    35          #include "zf_common_headfile.h"
    36          #include "PD_ENC_SDI.h"
    37          #include "var.h"
-   38          void pit_hanlder (void)
-   39          {
-   40   1          imu660rb_get_acc();                                                         // 获取 IMU660RB 的加速度
-             -测量数值
-   41   1          imu660rb_get_gyro();                                                        // 获取 IMU660RB 的角速度
-             -测量数值
-   42   1      }
+   38          
+   39          #define CHANNEL_NUMBER          (3)
+   40          #define ADC_CHANNEL1            ( ADC2_CH5_P05 )
+   41          #define ADC_CHANNEL2            ( ADC2_CH6_P06 )
+   42          #define ADC_CHANNEL3            ( ADC2_CH7_P07 )
    43          
-   44          // 陀螺仪型号为IMU963RA 因兼容性改为IMU660RB//
-   45          void main(void)
-   46          {
-   47   1      
-   48   1          clock_init(SYSTEM_CLOCK_96M); // 时钟配置及系统初始化<务必保留>
-   49   1          debug_init();                 // 调试串口信息初始化
-   50   1           imu660rb_init();
-   51   1              // pit_ms_init(PIT_CH, 100, pit_handler);
-   52   1          // 此处编写用户代码 例如外设初始化代码等
-C251 COMPILER V5.60.0,  main                                                               10/03/26  19:36:16  PAGE 2   
+   44          // #define ADC_CHANNEL1            ( ADC2_CH0_P00 )
+   45          // #define ADC_CHANNEL2            ( ADC2_CH1_P01 )
+   46          // #define ADC_CHANNEL3            ( ADC2_CH2_P02 )
+   47          
+   48          uint8 channel_index = 0;
+   49          adc_channel_enum channel_list[CHANNEL_NUMBER] =
+   50          {
+   51              ADC_CHANNEL1, 
+   52              ADC_CHANNEL2, 
+   53              ADC_CHANNEL3, 
+   54          };
+C251 COMPILER V5.60.0,  main                                                               12/03/26  20:08:31  PAGE 2   
 
-   53   1          tim0_irq_handler = pit_hanlder;
-   54   1          pit_ms_init(TIM0_PIT, 5,pit_hanlder);
-   55   1          while(1)
-   56   1          {
-   57   2              // 此处编写需要循环执行的代码
-   58   2              printf("\r\nIMU660RB gyro data:  x=%5d, y=%5d, z=%5d\r\n", imu660rb_gyro_x, imu660rb_gyro_y, imu6
-             -60rb_gyro_z);
-   59   2                      printf("\r\nIMU660RB gyro data:  x=%5d, y=%5d, z=%5d\r\n", imu660rb_acc_x, imu660rb_acc_y, imu660rb_acc
-             -_z);
-   60   2              system_delay_ms(1000);
-   61   2              // 此处编写需要循环执行的代码
-   62   2          }
-   63   1      }
+   55          
+   56          
+   57          void pit_hanlder (void)
+   58          {
+   59   1          imu660rb_get_acc();                                                         // 获取 IMU660RB 的加速度
+             -测量数值
+   60   1          imu660rb_get_gyro();                                                        // 获取 IMU660RB 的角速度
+             -测量数值
+   61   1      }
+   62          
+   63          // 陀螺仪型号为IMU963RA 因兼容性改为IMU660RB//
+   64          void main(void)
+   65          {
+   66   1      
+   67   1          clock_init(SYSTEM_CLOCK_96M); // 时钟配置及系统初始化<务必保留>
+   68   1          debug_init();                 // 调试串口信息初始化
+   69   1          imu660rb_init();
+   70   1          // // 此处编写用户代码 例如外设初始化代码等
+   71   1          tim0_irq_handler = pit_hanlder;
+   72   1          pit_ms_init(TIM0_PIT, 5,pit_hanlder);
+   73   1      
+   74   1          adc_init(ADC_CHANNEL1, ADC_12BIT);          // 初始化对应 ADC 通道为对应精度
+   75   1          adc_init(ADC_CHANNEL2, ADC_12BIT);          // 初始化对应 ADC 通道为对应精度
+   76   1          adc_init(ADC_CHANNEL3, ADC_12BIT);          // 初始化对应 ADC 通道为对应精度
+   77   1              printf("Success!");
+   78   1          while(1)
+   79   1          {
+   80   2              // 此处编写需要循环执行的代码
+   81   2              // printf("\r\nIMU660RB gyro data:  x=%5d, y=%5d, z=%5d\r\n", imu660rb_gyro_x, imu660rb_gyro_y, i
+             -mu660rb_gyro_z);
+   82   2                      // printf("\r\nIMU660RB acc data:  x=%5d, y=%5d, z=%5d\r\n", imu660rb_acc_x, imu660rb_acc_y, imu660rb_a
+             -cc_z);
+   83   2              // system_delay_ms(1000);
+   84   2      
+   85   2              for(channel_index = 0; channel_index < CHANNEL_NUMBER; channel_index ++)
+   86   2              {
+   87   3                  printf(
+   88   3                      "ADC channel %d convert data is %d.\r\n",
+   89   3                      channel_index + 1,
+   90   3                      adc_convert(channel_list[channel_index]));                      // 循环输出单次转换结果
+   91   3              }
+   92   2              system_delay_ms(500);
+   93   2      
+   94   2              for(channel_index = 0; channel_index < CHANNEL_NUMBER; channel_index ++)
+   95   2              {
+   96   3                  printf(
+   97   3                      "ADC channel %d mean filter convert data is %d.\r\n",
+   98   3                      channel_index + 1,
+   99   3                      adc_mean_filter_convert(channel_list[channel_index], 10));      // 循环输出 10 次均值滤波
+             -转换结果
+  100   3              }
+  101   2              system_delay_ms(500);
+  102   2      
+  103   2      
+  104   2              // 此处编写需要循环执行的代码
+  105   2          }
+  106   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
   code size            =    ------     ------
-  ecode size           =       278     ------
+  ecode size           =       447     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =    ------     ------
+  xdata size           =         7     ------
+C251 COMPILER V5.60.0,  main                                                               12/03/26  20:08:31  PAGE 3   
+
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------
@@ -100,7 +146,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =        47     ------
+  hconst size          =       114     ------
 End of Module Information.
 
 
