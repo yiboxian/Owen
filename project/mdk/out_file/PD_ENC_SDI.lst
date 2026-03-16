@@ -1,12 +1,12 @@
-C251 COMPILER V5.60.0,  PD_ENC_SDI                                                         02/03/26  20:15:46  PAGE 1   
+C251 COMPILER V5.60.0,  PD_ENC_SDI                                                         16/03/26  20:34:21  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE PD_ENC_SDI
 OBJECT MODULE PLACED IN .\out_file\PD_ENC_SDI.obj
-COMPILER INVOKED BY: D:\Keil5\C251\BIN\C251.EXE PD_ENC_SDI.c LARGE FLOAT64 ROM(HUGE) WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BR
-                    -OWSE INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;
-                    -..\user;..\code;..\..\libraries\zf_components\stc32g_usb_lib;..\..\libraries\zf_components\seekfree_assistant) DEBUG PRI
-                    -NT(.\out_file\PD_ENC_SDI.lst) OBJECT(.\out_file\PD_ENC_SDI.obj) 
+COMPILER INVOKED BY: D:\Keil5\C251\BIN\C251.EXE ..\code\PD_ENC_SDI.c LARGE FLOAT64 ROM(HUGE) WARNINGLEVEL(3) OPTIMIZE(0,
+                    -SIZE) BROWSE INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf
+                    -_driver;..\user;..\code;..\..\libraries\zf_components\stc32g_usb_lib;..\..\libraries\zf_components\seekfree_assistant) D
+                    -EBUG PRINT(.\out_file\PD_ENC_SDI.lst) OBJECT(.\out_file\PD_ENC_SDI.obj) 
 
 stmt  level    source
 

@@ -1,12 +1,12 @@
-C251 COMPILER V5.60.0,  var                                                                13/01/26  21:31:36  PAGE 1   
+C251 COMPILER V5.60.0,  var                                                                16/03/26  20:34:22  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE var
 OBJECT MODULE PLACED IN .\out_file\var.obj
-COMPILER INVOKED BY: D:\Keil5\C251\BIN\C251.EXE var.c LARGE FLOAT64 ROM(HUGE) WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE IN
-                    -CDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user
-                    -;..\code;..\..\libraries\zf_components\stc32g_usb_lib;..\..\libraries\zf_components\seekfree_assistant) DEBUG PRINT(.\ou
-                    -t_file\var.lst) OBJECT(.\out_file\var.obj) 
+COMPILER INVOKED BY: D:\Keil5\C251\BIN\C251.EXE ..\code\var.c LARGE FLOAT64 ROM(HUGE) WARNINGLEVEL(3) OPTIMIZE(0,SIZE) B
+                    -ROWSE INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver
+                    -;..\user;..\code;..\..\libraries\zf_components\stc32g_usb_lib;..\..\libraries\zf_components\seekfree_assistant) DEBUG PR
+                    -INT(.\out_file\var.lst) OBJECT(.\out_file\var.obj) 
 
 stmt  level    source
 
