@@ -37,10 +37,8 @@
 #include "var.h"
 #include "Motor.h"
 
-                              
 
 
-   
 void pit_hanlder (void)
 {
     imu660rb_get_acc();                                                         // 获取 IMU660RB 的加速度测量数值
@@ -54,14 +52,11 @@ void main(void)
     clock_init(SYSTEM_CLOCK_96M); // 时钟配置及系统初始化<务必保留>
     debug_init();                 // 调试串口信息初始化
     imu660rb_init();
-    // // 此处编写用户代码 例如外设初始化代码等
+//    // // 此处编写用户代码 例如外设初始化代码等
     tim0_irq_handler = pit_hanlder;
     pit_ms_init(TIM0_PIT, 5,pit_hanlder);
 
 
-
-    
-    
 
     // // 此处编写用户代码 例如外设初始化代码等
 
@@ -69,7 +64,8 @@ void main(void)
     // 此处编写用户代码 例如外设初始化代码等
 
     while(1)
-    {
+    {	
+		printf("\r\ntest");
         // 此处编写需要循环执行的代码
         printf("\r\nIMU660RB gyro data:  x=%5d, y=%5d, z=%5d\r\n", imu660rb_gyro_x, imu660rb_gyro_y, imu660rb_gyro_z);
 		printf("\r\nIMU660RB acc data:  x=%5d, y=%5d, z=%5d\r\n", imu660rb_acc_x, imu660rb_acc_y, imu660rb_acc_z);

@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  Motor                                                              16/03/26  21:25:52  PAGE 1   
+C251 COMPILER V5.60.0,  Motor                                                              17/03/26  20:56:12  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE Motor
@@ -66,7 +66,7 @@ stmt  level    source
    53   1              {
    54   2                  duty ++;                                                            // 正向计数
    55   2                  if(duty >= MAX_DUTY)                                                // 达到最大值
-C251 COMPILER V5.60.0,  Motor                                                              16/03/26  21:25:52  PAGE 2   
+C251 COMPILER V5.60.0,  Motor                                                              17/03/26  20:56:12  PAGE 2   
 
    56   2                  dir = 0;                                                            // 变更计数方向
    57   2              }

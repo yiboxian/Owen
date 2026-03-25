@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  main                                                               16/03/26  22:12:25  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               17/03/26  20:56:13  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
@@ -66,28 +66,28 @@ stmt  level    source
    50          // 陀螺仪型号为IMU963RA 因兼容性改为IMU660RB//
    51          void main(void)
    52          {
-C251 COMPILER V5.60.0,  main                                                               16/03/26  22:12:25  PAGE 2   
+C251 COMPILER V5.60.0,  main                                                               17/03/26  20:56:13  PAGE 2   
 
    53   1      
    54   1          clock_init(SYSTEM_CLOCK_96M); // 时钟配置及系统初始化<务必保留>
    55   1          debug_init();                 // 调试串口信息初始化
    56   1          imu660rb_init();
-   57   1          // // 此处编写用户代码 例如外设初始化代码等
+   57   1      //    // // 此处编写用户代码 例如外设初始化代码等
    58   1          tim0_irq_handler = pit_hanlder;
    59   1          pit_ms_init(TIM0_PIT, 5,pit_hanlder);
    60   1      
    61   1      
    62   1      
-   63   1          
-   64   1          
-   65   1      
-   66   1          // // 此处编写用户代码 例如外设初始化代码等
+   63   1      
+   64   1      
+   65   1          // // 此处编写用户代码 例如外设初始化代码等
+   66   1      
    67   1      
-   68   1      
-   69   1          // 此处编写用户代码 例如外设初始化代码等
-   70   1      
-   71   1          while(1)
-   72   1          {
+   68   1          // 此处编写用户代码 例如外设初始化代码等
+   69   1      
+   70   1          while(1)
+   71   1          {   
+   72   2                      printf("\r\ntest");
    73   2              // 此处编写需要循环执行的代码
    74   2              printf("\r\nIMU660RB gyro data:  x=%5d, y=%5d, z=%5d\r\n", imu660rb_gyro_x, imu660rb_gyro_y, imu6
              -60rb_gyro_z);
@@ -106,7 +106,7 @@ stmt  level    source
 Module Information          Static   Overlayable
 ------------------------------------------------
   code size            =    ------     ------
-  ecode size           =       278     ------
+  ecode size           =       291     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
@@ -120,7 +120,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =        91     ------
+  hconst size          =        98     ------
 End of Module Information.
 
 
