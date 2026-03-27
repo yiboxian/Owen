@@ -723,7 +723,7 @@
 
   <Group>
     <GroupName>zf_device</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -1374,8 +1374,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\code\PID.c</PathWithFileName>
-      <FilenameWithoutPath>PID.c</FilenameWithoutPath>
+      <PathWithFileName>..\code\Motor.c</PathWithFileName>
+      <FilenameWithoutPath>Motor.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1386,8 +1386,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\code\PID.h</PathWithFileName>
-      <FilenameWithoutPath>PID.h</FilenameWithoutPath>
+      <PathWithFileName>..\code\Motor.h</PathWithFileName>
+      <FilenameWithoutPath>Motor.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1398,20 +1398,20 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\code\var.c</PathWithFileName>
-      <FilenameWithoutPath>var.c</FilenameWithoutPath>
+      <PathWithFileName>..\code\ADC.c</PathWithFileName>
+      <FilenameWithoutPath>ADC.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
       <FileNumber>100</FileNumber>
-      <FileType>5</FileType>
+      <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\code\var.h</PathWithFileName>
-      <FilenameWithoutPath>var.h</FilenameWithoutPath>
+      <PathWithFileName>..\code\aoi_function.c</PathWithFileName>
+      <FilenameWithoutPath>aoi_function.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1422,20 +1422,80 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\code\Motor.c</PathWithFileName>
-      <FilenameWithoutPath>Motor.c</FilenameWithoutPath>
+      <PathWithFileName>..\code\IMU.c</PathWithFileName>
+      <FilenameWithoutPath>IMU.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
       <FileNumber>102</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\code\Logic.c</PathWithFileName>
+      <FilenameWithoutPath>Logic.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>6</GroupNumber>
+      <FileNumber>103</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\code\Motor.h</PathWithFileName>
-      <FilenameWithoutPath>Motor.h</FilenameWithoutPath>
+      <PathWithFileName>..\code\ADC.h</PathWithFileName>
+      <FilenameWithoutPath>ADC.h</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>6</GroupNumber>
+      <FileNumber>104</FileNumber>
+      <FileType>5</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\code\aoi_function.h</PathWithFileName>
+      <FilenameWithoutPath>aoi_function.h</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>6</GroupNumber>
+      <FileNumber>105</FileNumber>
+      <FileType>5</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\code\IMU.h</PathWithFileName>
+      <FilenameWithoutPath>IMU.h</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>6</GroupNumber>
+      <FileNumber>106</FileNumber>
+      <FileType>5</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\code\Logic.h</PathWithFileName>
+      <FilenameWithoutPath>Logic.h</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>6</GroupNumber>
+      <FileNumber>107</FileNumber>
+      <FileType>5</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\code\bsp_system.h</PathWithFileName>
+      <FilenameWithoutPath>bsp_system.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1449,7 +1509,7 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>7</GroupNumber>
-      <FileNumber>103</FileNumber>
+      <FileNumber>108</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1461,7 +1521,7 @@
     </File>
     <File>
       <GroupNumber>7</GroupNumber>
-      <FileNumber>104</FileNumber>
+      <FileNumber>109</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1473,7 +1533,7 @@
     </File>
     <File>
       <GroupNumber>7</GroupNumber>
-      <FileNumber>105</FileNumber>
+      <FileNumber>110</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>

@@ -1,14 +1,14 @@
 
 #include "zf_common_headfile.h"
-
+#include "Motor.h"
 //Motor para Control Area//
 #define MAX_DUTY            ( 50 )                                               // 最大 MAX_DUTY% 占空比
 
-#define DIR_1               ( IO_P50 ) 
+#define DIR_1               ( IO_P32 ) 
 #define PWM_1               ( PWMB_CH4_P34 )
                               
-#define DIR_2               ( IO_P52 ) 
-#define PWM_2               ( PWMD_CH4_P53 )
+#define DIR_2               ( IO_P83 ) 
+#define PWM_2               ( PWMA_CH1P_P10 )
                               
 #define DIR_3               ( IO_P75 )
 #define PWM_3               ( PWMB_CH1_P74 )
@@ -44,8 +44,8 @@ void Motor_Control(void)
             gpio_set_level(DIR_2, GPIO_HIGH);                                   // DIR输出高电平
             pwm_set_duty(PWM_2, duty * (PWM_DUTY_MAX / 100));                   // 计算占空比
 
-            gpio_set_level(DIR_3, GPIO_HIGH);                                   // DIR输出高电平
-            pwm_set_duty(PWM_3, duty * (PWM_DUTY_MAX / 100));                   // 计算占空比
+            // gpio_set_level(DIR_3, GPIO_HIGH);                                   // DIR输出高电平
+            // pwm_set_duty(PWM_3, duty * (PWM_DUTY_MAX / 100));                   // 计算占空比
 
         }
         
@@ -66,4 +66,45 @@ void Motor_Control(void)
         // 此处编写需要循环执行的代码
 
 }	
-
+void Motor_L(int16 duty)
+{
+    if(duty>9900)
+    {
+        duty=9900;
+    }
+    if(duty<-9900)
+    {
+        duty=-9900;
+    }
+    if(duty>0)
+    {
+        dir = 1;
+        pwm_set_duty(PWM_1,duty);
+    }
+    else
+    {
+        dir = 0;
+        pwm_set_duty(PWM_1,-duty);
+    }
+}
+void Motor_R(int16 duty)
+{
+    if(duty>9900)
+    {
+        duty=9900;
+    }
+    if(duty<-9900)
+    {
+        duty=-9900;
+    }
+    if(duty>0)
+    {
+        dir = 1;
+        pwm_set_duty(PWM_2,duty);
+    }
+    else
+    {
+        dir = 0;
+        pwm_set_duty(PWM_2,-duty);
+    }
+}

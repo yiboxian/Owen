@@ -32,18 +32,13 @@
  * 日期              作者           备注
  * 2025-11-20        大W            first version
  ********************************************************************************************************************/
-#include "zf_common_headfile.h"
-#include "PD_ENC_SDI.h"
-#include "var.h"
-#include "Motor.h"
+#include "bsp_system.h"
+// #include "PD_ENC_SDI.h"
+// #include "var.h"
+// #include "Motor.h"
+// #include "ADC.h"
 
-
-
-void pit_hanlder (void)
-{
-    imu660rb_get_acc();                                                         // 获取 IMU660RB 的加速度测量数值
-    imu660rb_get_gyro();                                                        // 获取 IMU660RB 的角速度测量数值
-}
+#define PIT_CH (TIM1_PIT)
 
 // 陀螺仪型号为IMU963RA 因兼容性改为IMU660RB//
 void main(void)
@@ -51,29 +46,34 @@ void main(void)
 
     clock_init(SYSTEM_CLOCK_96M); // 时钟配置及系统初始化<务必保留>
     debug_init();                 // 调试串口信息初始化
+    gpio_init(IO_P52, GPO, 0, GPO_PUSH_PULL);
     imu660rb_init();
-//    // // 此处编写用户代码 例如外设初始化代码等
-    tim0_irq_handler = pit_hanlder;
-    pit_ms_init(TIM0_PIT, 5,pit_hanlder);
-
-
-
     // // 此处编写用户代码 例如外设初始化代码等
-
+    // tim0_irq_handler = pit_hanlder;
+    pit_ms_init(PIT_CH, 100, ENC_handler);
+    //	siai_adc_all_sample();
+    my_adc_init();
+    ENC_Init();
+    Motor_Init();
+    printf("\r\nInit Success!\r\n");
+    // // 此处编写用户代码 例如外设初始化代码等
 
     // 此处编写用户代码 例如外设初始化代码等
 
-    while(1)
-    {	
-		printf("\r\ntest");
+    while (1)
+    {
+        Motor_Control();
+        siai_adc_all_sample();
+        adc_normalizing();
+		imu660rb_get_gyro();
+		imu660rb_get_acc();
+//        printf("encoder_data_dir_1 counter %d .\r\n", -encoder_data_dir_1); // 输出编码器计数信息
+//        printf("encoder_data_dir_2 counter %d .\r\n", encoder_data_dir_2);  // 输出编码器计数信息
+
+//        printf("Norm: L=%.1f, M=%.1f,R=%.1f\r\n", L, M, R);
+        system_delay_ms(500);
         // 此处编写需要循环执行的代码
         printf("\r\nIMU660RB gyro data:  x=%5d, y=%5d, z=%5d\r\n", imu660rb_gyro_x, imu660rb_gyro_y, imu660rb_gyro_z);
-		printf("\r\nIMU660RB acc data:  x=%5d, y=%5d, z=%5d\r\n", imu660rb_acc_x, imu660rb_acc_y, imu660rb_acc_z);
-        system_delay_ms(1000);
-
-        
-
-
-
+        printf("\r\nIMU660RB acc data:  x=%5d, y=%5d, z=%5d\r\n", imu660rb_acc_x, imu660rb_acc_y, imu660rb_acc_z);
     }
 }

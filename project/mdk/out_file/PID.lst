@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  PID                                                                16/03/26  21:25:43  PAGE 1   
+C251 COMPILER V5.60.0,  PID                                                                26/03/26  19:55:58  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE PID
@@ -10,17 +10,324 @@ COMPILER INVOKED BY: D:\Keil5\C251\BIN\C251.EXE ..\code\PID.c LARGE FLOAT64 ROM(
 
 stmt  level    source
 
-*** WARNING C38 IN LINE 1 OF ..\code\PID.c: empty translation unit
+    1          #include "PID.h"
+    2          #include "PID_Para.h"
+    3          #include "PD_ENC_SDI.h"
+    4          #include "IMU.h"
+    5          
+    6          
+    7          //速度环
+    8          int16 err_speed=0;
+    9          float out_L=0,out_R=0;
+   10          //方向环
+   11          float expect_gyro=0;
+   12          float correct_L=0;
+   13          //角度环
+   14          float out_angle=0;
+   15          //角速度环
+   16          int16 out_gyro=0;
+   17          
+   18          
+   19          
+   20          
+   21          
+   22          
+   23          //当前速度->速度环->PWM
+   24          void loop_speed(void) 
+   25          {
+   26   1              static int16 err_speed_last=0;
+   27   1              static float dec_speed_loop=0;
+   28   1              //0-编码器输入更新
+   29   1              
+   30   1              //1-误差计算
+   31   1              err_speed_last = err_speed;
+   32   1              err_speed = speed_target - speed_avl;
+   33   1              
+   34   1              //2-控制
+   35   1              dec_speed_loop =  pid_loop_speed.Kp * (err_speed - err_speed_last)
+   36   1                                                                              + pid_loop_speed.Ki *  err_speed;
+   37   1              
+   38   1      
+   39   1              //增量
+   40   1              if(dec_speed_loop>2000 ){dec_speed_loop=2000; }
+   41   1              if(dec_speed_loop<-2000){dec_speed_loop=-2000;}
+   42   1              
+   43   1              //输出
+   44   1              out_L += dec_speed_loop;
+   45   1              
+   46   1              out_R = out_L;
+   47   1              
+   48   1        if(out_L>9900 ){out_L=9900; }
+   49   1              if(out_L<-9900){out_L=-9900;}
+   50   1              if(out_R>9900 ){out_R=9900; }
+   51   1              if(out_R<-9900){out_R=-9900;}
+   52   1      }
+   53          
+   54          
+   55          void loop_speed_LR(int16 speed_L_t,int16 speed_R_t) 
+   56          {
+C251 COMPILER V5.60.0,  PID                                                                26/03/26  19:55:58  PAGE 2   
+
+   57   1              static int16 err_speed_L_last=0,err_speed_L=0;
+   58   1              static float dec_speed_loop_L=0;
+   59   1              static int16 err_speed_R_last=0,err_speed_R=0;
+   60   1              static float dec_speed_loop_R=0;
+   61   1              
+   62   1              
+   63   1              //0-编码器输入更新
+   64   1              
+   65   1              //1-误差计算
+   66   1              err_speed_L_last = err_speed_L;
+   67   1              err_speed_L = speed_L_t - speed_L;
+   68   1              
+   69   1              //2-控制
+   70   1              dec_speed_loop_L =  pid_loop_speed.Kp * (err_speed_L - err_speed_L_last)
+   71   1                                                                                + pid_loop_speed.Ki *  err_speed_L;
+   72   1      
+   73   1              //增量
+   74   1              if(dec_speed_loop_L>3000 ){dec_speed_loop_L=3000; }
+   75   1              if(dec_speed_loop_L<-3000){dec_speed_loop_L=-3000;}
+   76   1              
+   77   1              //输出
+   78   1              out_L += dec_speed_loop_L;
+   79   1      
+   80   1              
+   81   1      
+   82   1              //0-编码器输入更新
+   83   1              
+   84   1              //1-误差计算
+   85   1              err_speed_R_last = err_speed_R;
+   86   1              err_speed_R = speed_R_t - speed_R;
+   87   1              
+   88   1              //2-控制
+   89   1              dec_speed_loop_R =  pid_loop_speed.Kp * (err_speed_R - err_speed_R_last)
+   90   1                                                                                + pid_loop_speed.Ki *  err_speed_R;
+   91   1      
+   92   1              //增量
+   93   1              if(dec_speed_loop_R>3000 ){dec_speed_loop_R=3000; }
+   94   1              if(dec_speed_loop_R<-3000){dec_speed_loop_R=-3000;}
+   95   1              
+   96   1              //输出
+   97   1              out_R += dec_speed_loop_R;
+   98   1              
+   99   1        if(out_L>9900 ){out_L=9900; }
+  100   1              if(out_L<-9900){out_L=-9900;}
+  101   1              if(out_R>9900 ){out_R=9900; }
+  102   1              if(out_R<-9900){out_R=-9900;}
+  103   1      }
+  104          
+  105          
+  106          
+  107          
+  108          
+  109          
+  110          
+  111          
+  112          
+  113          
+  114          
+  115          
+  116          
+  117          
+  118          
+  119          
+  120          
+  121                  
+  122                  //前馈
+C251 COMPILER V5.60.0,  PID                                                                26/03/26  19:55:58  PAGE 3   
+
+  123          //      err_feedforward =  17*(direction_err1[0] - direction_err1[1])                                                                                                   //P
+  124          //                                                                       + 14*(direction_err1[0] - 2*direction_err1[1] + direction_err1[2]);    //D
+  125          //电磁位置->方向环->电机差速
+  126          void direction_return(float err_position)
+  127          {
+  128   1              static float err_feedforward=0, err_gyro,dec=0;
+  129   1              static float direction_err1[4]={0}, direction_err2[2]={0};
+  130   1              static float expect_gyro_last=0,correct_L_last=0;
+  131   1              static float D_err=0;
+  132   1              static int flag=0;
+  133   1              //1-电磁位置->方向环->角速度期望
+  134   1      //      direction_err1[3]=direction_err1[2];
+  135   1              direction_err1[2]=direction_err1[1];
+  136   1              direction_err1[1]=direction_err1[0];
+  137   1              direction_err1[0]=err_position;
+  138   1      
+  139   1              
+  140   1              D_err = direction_err1[0] - direction_err1[1];
+  141   1              
+  142   1              if(flag==0 &&(D_err>5.3||D_err<-5.3))
+  143   1              {
+  144   2                      direction_err1[0] = direction_err1[1];
+  145   2                      flag=1;
+  146   2              }
+  147   1              else
+  148   1              {
+  149   2                      flag=0;
+  150   2              }
+  151   1              
+  152   1              //P D
+  153   1              expect_gyro =  pid_motor_run.Kp *  direction_err1[0]            
+  154   1                                                               + pid_motor_run.Kd * (direction_err1[0] - direction_err1[1]);    //之后再测direction_err1[3]) 
+  155   1      
+  156   1              
+  157   1              if(expect_gyro>limit_gyro){expect_gyro=limit_gyro;}
+  158   1              if(expect_gyro<-limit_gyro){expect_gyro=-limit_gyro;}
+  159   1              
+  160   1              //2-角速度->角速度环->电机差速(值)
+  161   1              err_gyro = expect_gyro - avl_gyro_z;
+  162   1              direction_err2[1]=direction_err2[0];
+  163   1              direction_err2[0]=err_gyro;
+  164   1      
+  165   1              correct_L       =  pid_motor_run.Kp_gyro *  direction_err2[0]
+  166   1                                                       + pid_motor_run.Kd_gyro * (direction_err2[0] - direction_err2[1]);
+  167   1              
+  168   1               
+  169   1              
+  170   1              if(correct_L>10000){correct_L=10000;}
+  171   1              if(correct_L<-10000){correct_L=-10000;}
+  172   1      
+  173   1              correct_L_last = correct_L;
+  174   1      
+  175   1      }
+  176          
+  177          
+  178          
+  179          //                                                       + err_gyro*err_gyro*err_gyro*0.0001;   
+  180                  
+  181          
+  182          
+  183          
+  184          float expect_gyro_angles;
+  185          //目标角度->角度环->角速度期望
+  186          void loop_angle(float next_angle,float target_angle)
+  187          {       
+  188   1              static float err_gyro;
+C251 COMPILER V5.60.0,  PID                                                                26/03/26  19:55:58  PAGE 4   
+
+  189   1              static float gyro_err[2]={0},angle_err[3]={0};
+  190   1              
+  191   1              //角度环
+  192   1              angle_err[2] = angle_err[1];
+  193   1              angle_err[1] = angle_err[0];
+  194   1              angle_err[0] = target_angle - next_angle;                       //误差更新
+  195   1                      
+  196   1              expect_gyro_angles =  pid_loop_angle.Kp *  angle_err[0] 
+  197   1                                                               + pid_loop_angle.Kd * (angle_err[1] - angle_err[2]);           //PID
+  198   1              
+  199   1              //输出限幅
+  200   1              if(expect_gyro_angles>speed_turn) {expect_gyro_angles=speed_turn;}
+  201   1              if(expect_gyro_angles<-speed_turn){expect_gyro_angles=-speed_turn;}
+  202   1              
+  203   1              
+  204   1              
+  205   1              //2-角速度->角速度环->电机差速(值)
+  206   1              err_gyro = expect_gyro_angles - avl_gyro_z;
+  207   1              gyro_err[1]=gyro_err[0];
+  208   1              gyro_err[0]=err_gyro;
+  209   1              
+  210   1              
+  211   1      
+  212   1              out_angle       =    pid_loop_angle.Kp_gyro *  gyro_err[0]
+  213   1                                                               + pid_loop_angle.Kd_gyro * (gyro_err[0] - gyro_err[1]);
+  214   1      //                                                       + err_gyro*err_gyro*err_gyro*0.0001;   
+  215   1      
+  216   1              if(correct_L>12500){correct_L=12500;}
+  217   1              if(correct_L<-12500){correct_L=-12500;}
+  218   1      
+  219   1              
+  220   1      }
+  221          
+  222          
+  223          void gyro_loop(float gyro_expect)               //用于测试
+  224          {
+  225   1              static float gyro_err[2]={0};
+  226   1              
+  227   1              //输入数据
+  228   1              
+  229   1              gyro_err[1] = gyro_err[0];                                      
+  230   1              gyro_err[0] = gyro_expect - avl_gyro_z;
+  231   1              
+  232   1              
+  233   1              out_gyro =  pid_loop_gyro.Kp_gyro *  gyro_err[0]
+  234   1                                                      + pid_loop_gyro.Kd_gyro * (gyro_err[0] - gyro_err[1]);
+  235   1              
+  236   1      //      out_gyro =  pid_motor_turn.Kp_gyro *  gyro_err[0]
+  237   1      //                                              + pid_motor_turn.Kd_gyro * (gyro_err[0] - gyro_err[1]);
+  238   1      //      
+  239   1              
+  240   1      
+  241   1              
+  242   1              //输出限幅
+  243   1              if(out_gyro>5500) {out_gyro=5500;}
+  244   1              if(out_gyro<-5500){out_gyro=-5500;}
+  245   1              
+  246   1      }
+  247          
+  248          
+  249          
+  250          
+  251          
+  252          
+  253          void alter_loop_left(float speed_expect)
+  254          {
+C251 COMPILER V5.60.0,  PID                                                                26/03/26  19:55:58  PAGE 5   
+
+  255   1              static float dec=0;
+  256   1              static float err[2]={0};
+  257   1              
+  258   1              //输入
+  259   1              err[0] = speed_expect - speed_L;
+  260   1              
+  261   1              //控制
+  262   1              dec =  20 * (err[0] - err[1])           //Ki
+  263   1                               + 5  *  err[0];                                                //Kp
+  264   1              
+  265   1              //增量
+  266   1              if(dec>2000 ){dec=2000; }       
+  267   1              if(dec<-2000){dec=-2000;}       
+  268   1                      
+  269   1              //输出  
+  270   1              out_L += dec;   
+  271   1              
+  272   1        if(out_L>5000 ){out_L=5000; } 
+  273   1              if(out_L<-5000){out_L=-5000;}   
+  274   1              
+  275   1      }
+  276          
+  277          
+  278          void alter_loop_right(float speed_expect)
+  279          {
+  280   1              static float dec=0;
+  281   1              static float err[2]={0};
+  282   1              
+  283   1              //输入
+  284   1              err[0] = speed_expect - speed_R;
+  285   1              
+  286   1              //控制
+  287   1              dec =  20 * (err[0] - err[1])           //Ki
+  288   1                               + 5  *  err[0];                                                //Kp
+  289   1              
+  290   1              //增量
+  291   1              if(dec>2000 ){dec=2000; }       
+  292   1              if(dec<-2000){dec=-2000;}       
+  293   1                      
+  294   1              //输出  
+  295   1              out_L += dec;   
+  296   1              
+  297   1        if(out_R>5000 ){out_R=5000; } 
+  298   1              if(out_R<-5000){out_R=-5000;}   
+  299   1              
+  300   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
   code size            =    ------     ------
-  ecode size           =    ------     ------
+  ecode size           =      3124     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =    ------     ------
+  xdata size           =       184     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------
@@ -30,8 +337,10 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =    ------     ------
+  hconst size          =       294     ------
 End of Module Information.
 
+C251 COMPILER V5.60.0,  PID                                                                26/03/26  19:55:58  PAGE 6   
 
-C251 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
+
+C251 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

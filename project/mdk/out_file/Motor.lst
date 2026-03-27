@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  Motor                                                              17/03/26  20:56:12  PAGE 1   
+C251 COMPILER V5.60.0,  Motor                                                              27/03/26  19:28:55  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE Motor
@@ -12,15 +12,15 @@ stmt  level    source
 
     1          
     2          #include "zf_common_headfile.h"
-    3          
+    3          #include "Motor.h"
     4          //Motor para Control Area//
     5          #define MAX_DUTY            ( 50 )                                               // 最大 MAX_DUTY% 占空比
     6          
-    7          #define DIR_1               ( IO_P50 ) 
+    7          #define DIR_1               ( IO_P32 ) 
     8          #define PWM_1               ( PWMB_CH4_P34 )
     9                                        
-   10          #define DIR_2               ( IO_P52 ) 
-   11          #define PWM_2               ( PWMD_CH4_P53 )
+   10          #define DIR_2               ( IO_P83 ) 
+   11          #define PWM_2               ( PWMA_CH1P_P10 )
    12                                        
    13          #define DIR_3               ( IO_P75 )
    14          #define PWM_3               ( PWMB_CH1_P74 )
@@ -56,8 +56,8 @@ stmt  level    source
    44   2                  gpio_set_level(DIR_2, GPIO_HIGH);                                   // DIR输出高电平
    45   2                  pwm_set_duty(PWM_2, duty * (PWM_DUTY_MAX / 100));                   // 计算占空比
    46   2      
-   47   2                  gpio_set_level(DIR_3, GPIO_HIGH);                                   // DIR输出高电平
-   48   2                  pwm_set_duty(PWM_3, duty * (PWM_DUTY_MAX / 100));                   // 计算占空比
+   47   2                  // gpio_set_level(DIR_3, GPIO_HIGH);                                   // DIR输出高电平
+   48   2                  // pwm_set_duty(PWM_3, duty * (PWM_DUTY_MAX / 100));                   // 计算占空比
    49   2      
    50   2              }
    51   1              
@@ -66,7 +66,7 @@ stmt  level    source
    53   1              {
    54   2                  duty ++;                                                            // 正向计数
    55   2                  if(duty >= MAX_DUTY)                                                // 达到最大值
-C251 COMPILER V5.60.0,  Motor                                                              17/03/26  20:56:12  PAGE 2   
+C251 COMPILER V5.60.0,  Motor                                                              27/03/26  19:28:55  PAGE 2   
 
    56   2                  dir = 0;                                                            // 变更计数方向
    57   2              }
@@ -81,19 +81,62 @@ stmt  level    source
    66   1              // 此处编写需要循环执行的代码
    67   1      
    68   1      }       
-   69          
+   69          void Motor_L(int16 duty)
+   70          {
+   71   1          if(duty>9900)
+   72   1          {
+   73   2              duty=9900;
+   74   2          }
+   75   1          if(duty<-9900)
+   76   1          {
+   77   2              duty=-9900;
+   78   2          }
+   79   1          if(duty>0)
+   80   1          {
+   81   2              dir = 1;
+   82   2              pwm_set_duty(PWM_1,duty);
+   83   2          }
+   84   1          else
+   85   1          {
+   86   2              dir = 0;
+   87   2              pwm_set_duty(PWM_1,-duty);
+   88   2          }
+   89   1      }
+   90          void Motor_R(int16 duty)
+   91          {
+   92   1          if(duty>9900)
+   93   1          {
+   94   2              duty=9900;
+   95   2          }
+   96   1          if(duty<-9900)
+   97   1          {
+   98   2              duty=-9900;
+   99   2          }
+  100   1          if(duty>0)
+  101   1          {
+  102   2              dir = 1;
+  103   2              pwm_set_duty(PWM_2,duty);
+  104   2          }
+  105   1          else
+  106   1          {
+  107   2              dir = 0;
+  108   2              pwm_set_duty(PWM_2,-duty);
+  109   2          }
+  110   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
   code size            =    ------     ------
-  ecode size           =       359     ------
+  ecode size           =       559     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =         2     ------
+  xdata size           =         6     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
+C251 COMPILER V5.60.0,  Motor                                                              27/03/26  19:28:55  PAGE 3   
+
   bit size             =    ------     ------
   ebit size            =    ------     ------
   bitaddressable size  =    ------     ------
