@@ -39,7 +39,7 @@
 // #include "ADC.h"
 
 #define PIT_CH (TIM1_PIT)
-
+void pit_hanlder (void);
 // 陀螺仪型号为IMU963RA 因兼容性改为IMU660RB//
 void main(void)
 {
@@ -48,12 +48,13 @@ void main(void)
     debug_init();                 // 调试串口信息初始化
     gpio_init(IO_P52, GPO, 0, GPO_PUSH_PULL);
     imu660rb_init();
-    // // 此处编写用户代码 例如外设初始化代码等
-    // tim0_irq_handler = pit_hanlder;
-    pit_ms_init(PIT_CH, 100, ENC_handler);
-    //	siai_adc_all_sample();
-    my_adc_init();
-    ENC_Init();
+    // // // 此处编写用户代码 例如外设初始化代码等
+    // // tim0_irq_handler = pit_hanlder;
+    // pit_ms_init(PIT_CH, 100, ENC_handler);
+    // //	siai_adc_all_sample();
+    // my_adc_init();
+    // ENC_Init();
+    pit_ms_init(PIT_CH, 5, pit_hanlder);
     Motor_Init();
     printf("\r\nInit Success!\r\n");
     // // 此处编写用户代码 例如外设初始化代码等
@@ -62,18 +63,26 @@ void main(void)
 
     while (1)
     {
-        Motor_Control();
-        siai_adc_all_sample();
-        adc_normalizing();
-		imu660rb_get_gyro();
-		imu660rb_get_acc();
+//        Motor_Control();
+        // siai_adc_all_sample();
+        // adc_normalizing();
+
+		
+		Motor_R(4000);
+		Motor_L(4000);
 //        printf("encoder_data_dir_1 counter %d .\r\n", -encoder_data_dir_1); // 输出编码器计数信息
 //        printf("encoder_data_dir_2 counter %d .\r\n", encoder_data_dir_2);  // 输出编码器计数信息
 
 //        printf("Norm: L=%.1f, M=%.1f,R=%.1f\r\n", L, M, R);
-        system_delay_ms(500);
+        
         // 此处编写需要循环执行的代码
         printf("\r\nIMU660RB gyro data:  x=%5d, y=%5d, z=%5d\r\n", imu660rb_gyro_x, imu660rb_gyro_y, imu660rb_gyro_z);
         printf("\r\nIMU660RB acc data:  x=%5d, y=%5d, z=%5d\r\n", imu660rb_acc_x, imu660rb_acc_y, imu660rb_acc_z);
+		system_delay_ms(500);
     }
+}
+void pit_hanlder (void)
+{
+    imu660rb_get_acc();                                                         // 获取 imu660rb 的加速度测量数值
+    imu660rb_get_gyro();                                                        // 获取 imu660rb 的角速度测量数值
 }

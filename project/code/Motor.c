@@ -10,10 +10,10 @@
 #define DIR_2               ( IO_P83 ) 
 #define PWM_2               ( PWMA_CH1P_P10 )
                               
-#define DIR_3               ( IO_P75 )
-#define PWM_3               ( PWMB_CH1_P74 )
+// #define DIR_3               ( IO_P75 )
+// #define PWM_3               ( PWMB_CH1_P74 )
 
-int8 duty = 0;
+int16 duty = 0;
 int8 dir = 1;
 
 // #define DIR_4               ( IO_P77 )
@@ -24,13 +24,13 @@ void Motor_Init(void)
 	{
 	
 	gpio_init(DIR_1, GPO, GPIO_HIGH, GPO_PUSH_PULL);   // GPIO 初始化为输出 默认上拉输出高
-    pwm_init(PWM_1, 17000, 0);                         // PWM 通道初始化频率 17KHz 占空比初始为 0
+    pwm_init(PWMB_CH4_P34, 17000, 0);                         // PWM 通道初始化频率 17KHz 占空比初始为 0
 
     gpio_init(DIR_2, GPO, GPIO_HIGH, GPO_PUSH_PULL);   // GPIO 初始化为输出 默认上拉输出高
-    pwm_init(PWM_2, 17000, 0);                         // PWM 通道初始化频率 17KHz 占空比初始为 0
+    pwm_init(PWMA_CH1P_P10, 17000, 0);                         // PWM 通道初始化频率 17KHz 占空比初始为 0
 
-    gpio_init(DIR_3, GPO, GPIO_HIGH, GPO_PUSH_PULL);   // GPIO 初始化为输出 默认上拉输出高
-    pwm_init(PWM_3, 17000, 0);                         // PWM 通道初始化频率 17KHz 占空比初始为 0
+    // gpio_init(DIR_3, GPO, GPIO_HIGH, GPO_PUSH_PULL);   // GPIO 初始化为输出 默认上拉输出高
+    // pwm_init(PWM_3, 17000, 0);                         // PWM 通道初始化频率 17KHz 占空比初始为 0
 
 	}
 void Motor_Control(void)

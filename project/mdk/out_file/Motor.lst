@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  Motor                                                              27/03/26  19:28:55  PAGE 1   
+C251 COMPILER V5.60.0,  Motor                                                              28/03/26  20:52:00  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE Motor
@@ -22,10 +22,10 @@ stmt  level    source
    10          #define DIR_2               ( IO_P83 ) 
    11          #define PWM_2               ( PWMA_CH1P_P10 )
    12                                        
-   13          #define DIR_3               ( IO_P75 )
-   14          #define PWM_3               ( PWMB_CH1_P74 )
+   13          // #define DIR_3               ( IO_P75 )
+   14          // #define PWM_3               ( PWMB_CH1_P74 )
    15          
-   16          int8 duty = 0;
+   16          int16 duty = 0;
    17          int8 dir = 1;
    18          
    19          // #define DIR_4               ( IO_P77 )
@@ -36,13 +36,13 @@ stmt  level    source
    24                  {
    25   1              
    26   1              gpio_init(DIR_1, GPO, GPIO_HIGH, GPO_PUSH_PULL);   // GPIO 初始化为输出 默认上拉输出高
-   27   1          pwm_init(PWM_1, 17000, 0);                         // PWM 通道初始化频率 17KHz 占空比初始为 0
+   27   1          pwm_init(PWMB_CH4_P34, 17000, 0);                         // PWM 通道初始化频率 17KHz 占空比初始为 0
    28   1      
    29   1          gpio_init(DIR_2, GPO, GPIO_HIGH, GPO_PUSH_PULL);   // GPIO 初始化为输出 默认上拉输出高
-   30   1          pwm_init(PWM_2, 17000, 0);                         // PWM 通道初始化频率 17KHz 占空比初始为 0
+   30   1          pwm_init(PWMA_CH1P_P10, 17000, 0);                         // PWM 通道初始化频率 17KHz 占空比初始为 0
    31   1      
-   32   1          gpio_init(DIR_3, GPO, GPIO_HIGH, GPO_PUSH_PULL);   // GPIO 初始化为输出 默认上拉输出高
-   33   1          pwm_init(PWM_3, 17000, 0);                         // PWM 通道初始化频率 17KHz 占空比初始为 0
+   32   1          // gpio_init(DIR_3, GPO, GPIO_HIGH, GPO_PUSH_PULL);   // GPIO 初始化为输出 默认上拉输出高
+   33   1          // pwm_init(PWM_3, 17000, 0);                         // PWM 通道初始化频率 17KHz 占空比初始为 0
    34   1      
    35   1              }
    36          void Motor_Control(void)
@@ -66,7 +66,7 @@ stmt  level    source
    53   1              {
    54   2                  duty ++;                                                            // 正向计数
    55   2                  if(duty >= MAX_DUTY)                                                // 达到最大值
-C251 COMPILER V5.60.0,  Motor                                                              27/03/26  19:28:55  PAGE 2   
+C251 COMPILER V5.60.0,  Motor                                                              28/03/26  20:52:00  PAGE 2   
 
    56   2                  dir = 0;                                                            // 变更计数方向
    57   2              }
@@ -128,14 +128,14 @@ stmt  level    source
 Module Information          Static   Overlayable
 ------------------------------------------------
   code size            =    ------     ------
-  ecode size           =       559     ------
+  ecode size           =       532     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =         6     ------
+  xdata size           =         7     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
-C251 COMPILER V5.60.0,  Motor                                                              27/03/26  19:28:55  PAGE 3   
+C251 COMPILER V5.60.0,  Motor                                                              28/03/26  20:52:00  PAGE 3   
 
   bit size             =    ------     ------
   ebit size            =    ------     ------
@@ -144,7 +144,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =        12     ------
+  hconst size          =        13     ------
 End of Module Information.
 
 

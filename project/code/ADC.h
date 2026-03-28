@@ -6,11 +6,11 @@ void my_ADC_Init(void);
 #define ADC_Sample_Num 7
 
 //ÐÂ°æ
-#define ADC_L_CH 			ADC_CH0_P10
-#define ADC_LM_CH     ADC_CH8_P00
-#define ADC_M_CH      ADC_CH9_P01
-#define ADC_RM_CH     ADC_CH13_P05
-#define ADC_R_CH      ADC_CH14_P06
+// #define ADC_L_CH 			ADC_CH0_P10
+// #define ADC_LM_CH     ADC_CH8_P00
+// #define ADC_M_CH      ADC_CH9_P01
+// #define ADC_RM_CH     ADC_CH13_P05
+// #define ADC_R_CH      ADC_CH14_P06
 
 #define ADC_V ADC_CH2_P12
 

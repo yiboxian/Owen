@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  main                                                               27/03/26  19:58:48  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               28/03/26  22:21:57  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
@@ -53,7 +53,7 @@ stmt  level    source
    39          // #include "ADC.h"
    40          
    41          #define PIT_CH (TIM1_PIT)
-   42          
+   42          void pit_hanlder (void);
    43          // 陀螺仪型号为IMU963RA 因兼容性改为IMU660RB//
    44          void main(void)
    45          {
@@ -62,45 +62,56 @@ stmt  level    source
    48   1          debug_init();                 // 调试串口信息初始化
    49   1          gpio_init(IO_P52, GPO, 0, GPO_PUSH_PULL);
    50   1          imu660rb_init();
-   51   1          // // 此处编写用户代码 例如外设初始化代码等
-   52   1          // tim0_irq_handler = pit_hanlder;
-   53   1          pit_ms_init(PIT_CH, 100, ENC_handler);
-   54   1          //  siai_adc_all_sample();
-C251 COMPILER V5.60.0,  main                                                               27/03/26  19:58:48  PAGE 2   
+   51   1          // // // 此处编写用户代码 例如外设初始化代码等
+   52   1          // // tim0_irq_handler = pit_hanlder;
+   53   1          // pit_ms_init(PIT_CH, 100, ENC_handler);
+   54   1          // //       siai_adc_all_sample();
+C251 COMPILER V5.60.0,  main                                                               28/03/26  22:21:57  PAGE 2   
 
-   55   1          my_adc_init();
-   56   1          ENC_Init();
-   57   1          Motor_Init();
-   58   1          printf("\r\nInit Success!\r\n");
-   59   1          // // 此处编写用户代码 例如外设初始化代码等
-   60   1      
-   61   1          // 此处编写用户代码 例如外设初始化代码等
-   62   1      
-   63   1          while (1)
-   64   1          {
-   65   2              Motor_Control();
-   66   2              siai_adc_all_sample();
-   67   2              adc_normalizing();
-   68   2                      imu660rb_get_gyro();
-   69   2                      imu660rb_get_acc();
-   70   2      //        printf("encoder_data_dir_1 counter %d .\r\n", -encoder_data_dir_1); // 输出编码器计数信息
-   71   2      //        printf("encoder_data_dir_2 counter %d .\r\n", encoder_data_dir_2);  // 输出编码器计数信息
-   72   2      
-   73   2      //        printf("Norm: L=%.1f, M=%.1f,R=%.1f\r\n", L, M, R);
-   74   2              system_delay_ms(500);
-   75   2              // 此处编写需要循环执行的代码
-   76   2              printf("\r\nIMU660RB gyro data:  x=%5d, y=%5d, z=%5d\r\n", imu660rb_gyro_x, imu660rb_gyro_y, imu6
+   55   1          // my_adc_init();
+   56   1          // ENC_Init();
+   57   1          pit_ms_init(PIT_CH, 5, pit_hanlder);
+   58   1          Motor_Init();
+   59   1          printf("\r\nInit Success!\r\n");
+   60   1          // // 此处编写用户代码 例如外设初始化代码等
+   61   1      
+   62   1          // 此处编写用户代码 例如外设初始化代码等
+   63   1      
+   64   1          while (1)
+   65   1          {
+   66   2      //        Motor_Control();
+   67   2              // siai_adc_all_sample();
+   68   2              // adc_normalizing();
+   69   2      
+   70   2                      
+   71   2                      Motor_R(4000);
+   72   2                      Motor_L(4000);
+   73   2      //        printf("encoder_data_dir_1 counter %d .\r\n", -encoder_data_dir_1); // 输出编码器计数信息
+   74   2      //        printf("encoder_data_dir_2 counter %d .\r\n", encoder_data_dir_2);  // 输出编码器计数信息
+   75   2      
+   76   2      //        printf("Norm: L=%.1f, M=%.1f,R=%.1f\r\n", L, M, R);
+   77   2              
+   78   2              // 此处编写需要循环执行的代码
+   79   2              printf("\r\nIMU660RB gyro data:  x=%5d, y=%5d, z=%5d\r\n", imu660rb_gyro_x, imu660rb_gyro_y, imu6
              -60rb_gyro_z);
-   77   2              printf("\r\nIMU660RB acc data:  x=%5d, y=%5d, z=%5d\r\n", imu660rb_acc_x, imu660rb_acc_y, imu660r
+   80   2              printf("\r\nIMU660RB acc data:  x=%5d, y=%5d, z=%5d\r\n", imu660rb_acc_x, imu660rb_acc_y, imu660r
              -b_acc_z);
-   78   2          }
-   79   1      }
+   81   2                      system_delay_ms(500);
+   82   2          }
+   83   1      }
+   84          void pit_hanlder (void)
+   85          {
+   86   1          imu660rb_get_acc();                                                         // 获取 imu660rb 的加速度
+             -测量数值
+   87   1          imu660rb_get_gyro();                                                        // 获取 imu660rb 的角速度
+             -测量数值
+   88   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
   code size            =    ------     ------
-  ecode size           =       315     ------
+  ecode size           =       312     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------

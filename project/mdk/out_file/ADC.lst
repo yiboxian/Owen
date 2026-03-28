@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  ADC                                                                27/03/26  19:28:56  PAGE 1   
+C251 COMPILER V5.60.0,  ADC                                                                28/03/26  20:52:01  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE ADC
@@ -66,7 +66,7 @@ stmt  level    source
    54          {
    55   1              uint16 temp,sum=0;
    56   1              uint16 max,min;
-C251 COMPILER V5.60.0,  ADC                                                                27/03/26  19:28:56  PAGE 2   
+C251 COMPILER V5.60.0,  ADC                                                                28/03/26  20:52:01  PAGE 2   
 
    57   1              uint8 i;
    58   1              
@@ -134,7 +134,7 @@ stmt  level    source
   120   1              ADC_temp[0] = adc_sample(ADC_CHANNEL1 );
   121   1              ADC_temp[1] = adc_sample(ADC_CHANNEL2 );
   122   1              ADC_temp[2] = adc_sample(ADC_CHANNEL3 );
-C251 COMPILER V5.60.0,  ADC                                                                27/03/26  19:28:56  PAGE 3   
+C251 COMPILER V5.60.0,  ADC                                                                28/03/26  20:52:01  PAGE 3   
 
   123   1      
   124   1      
@@ -202,7 +202,7 @@ stmt  level    source
   186   1              v = v*0.038671;
   187   1              
   188   1              
-C251 COMPILER V5.60.0,  ADC                                                                27/03/26  19:28:56  PAGE 4   
+C251 COMPILER V5.60.0,  ADC                                                                28/03/26  20:52:01  PAGE 4   
 
   189   1              v = 0.1*v + 0.9*last_v;
   190   1              last_v = v;
