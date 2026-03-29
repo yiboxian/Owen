@@ -7,7 +7,7 @@
 #define DIR_1               ( IO_P32 ) 
 #define PWM_1               ( PWMB_CH4_P34 )
                               
-#define DIR_2               ( IO_P83 ) 
+#define DIR_2               ( IO_P81 ) 
 #define PWM_2               ( PWMA_CH1P_P10 )
                               
 // #define DIR_3               ( IO_P75 )

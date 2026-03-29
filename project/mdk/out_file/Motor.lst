@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  Motor                                                              28/03/26  20:52:00  PAGE 1   
+C251 COMPILER V5.60.0,  Motor                                                              29/03/26  20:38:48  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE Motor
@@ -19,7 +19,7 @@ stmt  level    source
     7          #define DIR_1               ( IO_P32 ) 
     8          #define PWM_1               ( PWMB_CH4_P34 )
     9                                        
-   10          #define DIR_2               ( IO_P83 ) 
+   10          #define DIR_2               ( IO_P81 ) 
    11          #define PWM_2               ( PWMA_CH1P_P10 )
    12                                        
    13          // #define DIR_3               ( IO_P75 )
@@ -66,7 +66,7 @@ stmt  level    source
    53   1              {
    54   2                  duty ++;                                                            // 正向计数
    55   2                  if(duty >= MAX_DUTY)                                                // 达到最大值
-C251 COMPILER V5.60.0,  Motor                                                              28/03/26  20:52:00  PAGE 2   
+C251 COMPILER V5.60.0,  Motor                                                              29/03/26  20:38:48  PAGE 2   
 
    56   2                  dir = 0;                                                            // 变更计数方向
    57   2              }
@@ -135,7 +135,7 @@ Module Information          Static   Overlayable
   xdata size           =         7     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
-C251 COMPILER V5.60.0,  Motor                                                              28/03/26  20:52:00  PAGE 3   
+C251 COMPILER V5.60.0,  Motor                                                              29/03/26  20:38:48  PAGE 3   
 
   bit size             =    ------     ------
   ebit size            =    ------     ------

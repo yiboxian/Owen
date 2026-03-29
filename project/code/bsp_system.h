@@ -12,6 +12,7 @@
 #include "Motor.h"
 #include "PD_ENC_SDI.h"
 #include "IMU.h"
+#include "key.h"
 
 #include "stdio.h"
 #include "math.h"

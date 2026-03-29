@@ -68,8 +68,8 @@
 	#define IMU660RB_SPC_PIN            ( SPI2_CH3_SCLK_PB4 )           // 硬件 SPI SCK 引脚
 	#define IMU660RB_SDI_PIN            ( SPI2_CH3_MOSI_PB2 )           // 硬件 SPI MOSI 引脚
 	#define IMU660RB_SDO_PIN            ( SPI2_CH3_MISO_PB3 )           // 硬件 SPI MISO 引脚
-	#define IMU660RB_CS_PIN             ( IO_PB5 )                      // CS 片选引脚
-	#define IMU660RB_CS(x)              ( B5 = x )
+	#define IMU660RB_CS_PIN             ( IO_P24 )                      // CS 片选引脚
+	#define IMU660RB_CS(x)              ( P24 = x )
 //====================================================硬件 SPI 驱动====================================================
 #elif (IMU660RB_USE_INTERFACE==SOFT_SPI)
 //====================================================软件 SPI 驱动====================================================

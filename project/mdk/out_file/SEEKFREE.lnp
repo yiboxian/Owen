@@ -49,6 +49,7 @@
 ".\out_file\aoi_function.obj",
 ".\out_file\IMU.obj",
 ".\out_file\Logic.obj",
+".\out_file\key.obj",
 ".\out_file\isr.obj",
 ".\out_file\main.obj" 
 TO ".\out_file\SEEKFREE" 

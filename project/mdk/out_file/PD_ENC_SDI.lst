@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  PD_ENC_SDI                                                         28/03/26  20:52:00  PAGE 1   
+C251 COMPILER V5.60.0,  PD_ENC_SDI                                                         29/03/26  17:49:35  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE PD_ENC_SDI
@@ -66,7 +66,7 @@ stmt  level    source
    53          //      speed_L = (0.85f*encoder_get_count(TIM3_ENCOEDER));
    54                  
    55          //      encoder_clear_count(TIM3_ENCOEDER);
-C251 COMPILER V5.60.0,  PD_ENC_SDI                                                         28/03/26  20:52:00  PAGE 2   
+C251 COMPILER V5.60.0,  PD_ENC_SDI                                                         29/03/26  17:49:35  PAGE 2   
 
    56          //      encoder_clear_count(TIM0_ENCOEDER);
    57          //      //1-一阶低通滤波
@@ -134,7 +134,7 @@ stmt  level    source
   119   2          }
   120   1      
   121   1          // 计算并返回当前窗口的平均值
-C251 COMPILER V5.60.0,  PD_ENC_SDI                                                         28/03/26  20:52:00  PAGE 3   
+C251 COMPILER V5.60.0,  PD_ENC_SDI                                                         29/03/26  17:49:35  PAGE 3   
 
   122   1          *avg_speed = filter->sum / filter->count;
   123   1      }
