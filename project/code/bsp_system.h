@@ -14,6 +14,9 @@
 #include "IMU.h"
 #include "key.h"
 
+#include "PID.h"
+#include "Tracing.h"
+
 #include "stdio.h"
 #include "math.h"
 

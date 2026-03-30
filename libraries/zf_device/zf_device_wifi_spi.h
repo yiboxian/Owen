@@ -54,16 +54,16 @@
 #include "zf_common_typedef.h"
 
           
-#define WIFI_SPI_INDEX              ( SPI_2 )                   // 定义使用的SPI号
+#define WIFI_SPI_INDEX              ( SPI_3 )                   // 定义使用的SPI号
 #define WIFI_SPI_SPEED              ( 48 * 1000 * 1000 )        // 硬件 SPI 速率
-#define WIFI_SPI_SCK_PIN            ( SPI2_CH4_SCLK_P83 )       // 定义SPI_SCK引脚
-#define WIFI_SPI_MOSI_PIN           ( SPI2_CH4_MOSI_P81 )       // 定义SPI_MOSI引脚
-#define WIFI_SPI_MISO_PIN           ( SPI2_CH4_MISO_P82 )       // 定义SPI_MISO引脚  IPS没有MISO引脚，但是这里任然需要定义，在spi的初始化时需要使用
-#define WIFI_SPI_CS_PIN             ( IO_P64 )                  // 定义SPI_CS引脚 采用软件CS引脚
-#define WIFI_SPI_INT_PIN            ( IO_P15 )                  // 定义中断引脚
-#define WIFI_SPI_RST_PIN            ( IO_P47 )                  // 定义复位引脚
+#define WIFI_SPI_SCK_PIN            ( SPI3_CH1_SCLK_P25 )       // 定义SPI_SCK引脚
+#define WIFI_SPI_MOSI_PIN           ( SPI3_CH1_MOSI_P23 )       // 定义SPI_MOSI引脚
+#define WIFI_SPI_MISO_PIN           ( SPI3_CH1_MISO_P24 )       // 定义SPI_MISO引脚  IPS没有MISO引脚，但是这里任然需要定义，在spi的初始化时需要使用
+#define WIFI_SPI_CS_PIN             ( IO_P22 )                  // 定义SPI_CS引脚 采用软件CS引脚
+#define WIFI_SPI_INT_PIN            ( IO_P21 )                  // 定义中断引脚
+#define WIFI_SPI_RST_PIN            ( IO_P26 )                  // 定义复位引脚
 
-#define WIFI_SPI_CS(x)              ( P64  = x )
+#define WIFI_SPI_CS(x)              ( P22  = x )
 
 #define WIFI_SPI_RECVIVE_FIFO_SIZE  (1024)                      // 接收FIFO大小
 #define WIFI_SPI_READ_TRANSFER      (1)                         // 在调用wifi_spi_read_buffer 是否尝试发起SPI通讯来检测模块内是否有数据需要读取 1：发起SPI通讯 0：不发起SPI通讯，仅读取FIFO 
