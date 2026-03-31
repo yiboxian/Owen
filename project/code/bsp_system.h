@@ -13,6 +13,8 @@
 #include "PD_ENC_SDI.h"
 #include "IMU.h"
 #include "key.h"
+#include "wifi.h"
+
 
 #include "PID.h"
 #include "Tracing.h"

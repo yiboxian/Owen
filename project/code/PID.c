@@ -8,6 +8,7 @@ float out_L=0,out_R=0;
 //方向环
 float expect_gyro=0;
 float correct_L=0;
+//平均速度PI函数//
 void loop_speed(void) 
 {
 	static int16 err_speed_last=0;
@@ -38,7 +39,7 @@ void loop_speed(void)
 	if(out_R<-9900){out_R=-9900;}
 }
 
-
+//速度环差速函数//
 void loop_speed_LR(int16 speed_L_t,int16 speed_R_t) 
 {
 	static int16 err_speed_L_last=0,err_speed_L=0;

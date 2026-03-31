@@ -28,42 +28,42 @@ void ENC_Init(void)
 	initSlidingAverage(&filter_Right,6);
 }
 
-void ENC_handler (void)
-{
-    encoder_data_dir_1 = encoder_get_count(ENCODER_DIR_1);                  // 获取编码器计数
-    encoder_data_dir_2 = encoder_get_count(ENCODER_DIR_2);                  // 获取编码器计数
+// void ENC_handler (void)
+// {
+//     encoder_data_dir_1 = encoder_get_count(ENCODER_DIR_1);                  // 获取编码器计数
+//     encoder_data_dir_2 = encoder_get_count(ENCODER_DIR_2);                  // 获取编码器计数
 
-    encoder_clear_count(ENCODER_DIR_1);                                		// 清空编码器计数
-    encoder_clear_count(ENCODER_DIR_2);                                		// 清空编码器计数
+//     encoder_clear_count(ENCODER_DIR_1);                                		// 清空编码器计数
+//     encoder_clear_count(ENCODER_DIR_2);                                		// 清空编码器计数
 	
-	slidingAverage((float)-encoder_data_dir_1, &speed_L, &filter_Left);
-    slidingAverage((float)encoder_data_dir_2, &speed_R, &filter_Right);
+// 	slidingAverage((float)-encoder_data_dir_1, &speed_L, &filter_Left);
+//     slidingAverage((float)encoder_data_dir_2, &speed_R, &filter_Right);
 	
-}
+// }
 
 
 
 SlidingAverageFilter filter_Left;
 SlidingAverageFilter filter_Right;
 
-// void encoder_update(void)
-// {
-// 	//0-获取速度&清零
-// 	speed_R = (0.85f*encoder_get_count(TIM0_ENCOEDER));
-// 	speed_L = (0.85f*encoder_get_count(TIM3_ENCOEDER));
+void encoder_update(void)
+{
+	//0-获取速度&清零
+	speed_R = (0.85f*encoder_get_count(ENCODER_DIR_1));
+	speed_L = (0.85f*encoder_get_count(ENCODER_DIR_2));
 	
-// 	encoder_clear_count(TIM3_ENCOEDER);
-// 	encoder_clear_count(TIM0_ENCOEDER);
-// 	//1-一阶低通滤波
-// 	speed_L=(0.9*speed_L + 0.1*lastspeed_L);
-// 	speed_R=(0.9*speed_R + 0.1*lastspeed_R);
-// 	lastspeed_L = speed_L;
-// 	lastspeed_R = speed_R;
+    encoder_clear_count(ENCODER_DIR_1);                                		// 清空编码器计数
+    encoder_clear_count(ENCODER_DIR_2);                                		// 清空编码器计数
+	//1-一阶低通滤波
+	speed_L=(0.9*speed_L + 0.1*lastspeed_L);
+	speed_R=(0.9*speed_R + 0.1*lastspeed_R);
+	lastspeed_L = speed_L;
+	lastspeed_R = speed_R;
 	 
-// 	speed_avl = (speed_L + speed_R)/2;
+	speed_avl = (speed_L + speed_R)/2;
 	
-// 	distance_text += (int32)speed_avl;
-// }
+	distance_text += (int32)speed_avl;
+}
 //滤波方案2?//
 //void encoder_update(void)
 //{

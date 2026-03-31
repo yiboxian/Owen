@@ -52,7 +52,7 @@ void main(void)
 	Key_Init();
     // // // 此处编写用户代码 例如外设初始化代码等
     // // tim0_irq_handler = pit_hanlder;	
-    // pit_ms_init(PIT_CH, 100, ENC_handler);
+	pit_ms_init(PIT_CH, 10, encoder_update);
     // //	siai_adc_all_sample();
     // my_adc_init();
     // ENC_Init();
