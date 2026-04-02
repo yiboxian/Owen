@@ -1,12 +1,12 @@
-C251 COMPILER V5.60.0,  IMU                                                                31/03/26  11:23:39  PAGE 1   
+C251 COMPILER V5.60.0,  IMU                                                                01/04/26  17:02:26  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE IMU
 OBJECT MODULE PLACED IN .\out_file\IMU.obj
-COMPILER INVOKED BY: D:\Software\Keil5\C251\BIN\C251.EXE ..\code\IMU.c LARGE FLOAT64 ROM(HUGE) WARNINGLEVEL(3) OPTIMIZE(
-                    -0,SIZE) BROWSE INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\
-                    -zf_driver;..\user;..\code;..\..\libraries\zf_components\stc32g_usb_lib;..\..\libraries\zf_components\seekfree_assistant)
-                    - DEBUG PRINT(.\out_file\IMU.lst) OBJECT(.\out_file\IMU.obj) 
+COMPILER INVOKED BY: D:\Keil5\C251\BIN\C251.EXE ..\code\IMU.c LARGE FLOAT64 ROM(HUGE) WARNINGLEVEL(3) OPTIMIZE(0,SIZE) B
+                    -ROWSE INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver
+                    -;..\user;..\code;..\..\libraries\zf_components\stc32g_usb_lib;..\..\libraries\zf_components\seekfree_assistant) DEBUG PR
+                    -INT(.\out_file\IMU.lst) OBJECT(.\out_file\IMU.obj) 
 
 stmt  level    source
 
@@ -66,7 +66,7 @@ stmt  level    source
    54          
    55          void angle_clear(void)
    56          {
-C251 COMPILER V5.60.0,  IMU                                                                31/03/26  11:23:39  PAGE 2   
+C251 COMPILER V5.60.0,  IMU                                                                01/04/26  17:02:26  PAGE 2   
 
    57   1              angle_ringR=0;
    58   1      }

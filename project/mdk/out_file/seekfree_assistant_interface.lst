@@ -1,13 +1,13 @@
-C251 COMPILER V5.60.0,  seekfree_assistant_interface                                       31/03/26  11:23:38  PAGE 1   
+C251 COMPILER V5.60.0,  seekfree_assistant_interface                                       01/04/26  16:23:53  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE seekfree_assistant_interface
 OBJECT MODULE PLACED IN .\out_file\seekfree_assistant_interface.obj
-COMPILER INVOKED BY: D:\Software\Keil5\C251\BIN\C251.EXE ..\..\libraries\zf_components\seekfree_assistant\seekfree_assis
-                    -tant_interface.c LARGE FLOAT64 ROM(HUGE) WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(..\..\libraries\zf_common;..\..\
-                    -libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user;..\code;..\..\libraries\zf_component
-                    -s\stc32g_usb_lib;..\..\libraries\zf_components\seekfree_assistant) DEBUG PRINT(.\out_file\seekfree_assistant_interface.l
-                    -st) OBJECT(.\out_file\seekfree_assistant_interface.obj) 
+COMPILER INVOKED BY: D:\Keil5\C251\BIN\C251.EXE ..\..\libraries\zf_components\seekfree_assistant\seekfree_assistant_inte
+                    -rface.c LARGE FLOAT64 ROM(HUGE) WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(..\..\libraries\zf_common;..\..\libraries
+                    -\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user;..\code;..\..\libraries\zf_components\stc32g_
+                    -usb_lib;..\..\libraries\zf_components\seekfree_assistant) DEBUG PRINT(.\out_file\seekfree_assistant_interface.lst) OBJEC
+                    -T(.\out_file\seekfree_assistant_interface.obj) 
 
 stmt  level    source
 
@@ -66,7 +66,7 @@ stmt  level    source
              -------------
    49          // 函数简介     逐飞助手接收数据函数
    50          // 参数说明     *buff           需要接收的数据地址
-C251 COMPILER V5.60.0,  seekfree_assistant_interface                                       31/03/26  11:23:38  PAGE 2   
+C251 COMPILER V5.60.0,  seekfree_assistant_interface                                       01/04/26  16:23:53  PAGE 2   
 
    51          // 参数说明     length          要接收的数据最大长度
    52          // 返回参数     uint32          接收到的数据长度
@@ -135,7 +135,7 @@ Module Information          Static   Overlayable
   ecode size           =        95     ------
   data size            =    ------     ------
   idata size           =    ------     ------
-C251 COMPILER V5.60.0,  seekfree_assistant_interface                                       31/03/26  11:23:38  PAGE 3   
+C251 COMPILER V5.60.0,  seekfree_assistant_interface                                       01/04/26  16:23:53  PAGE 3   
 
   pdata size           =    ------     ------
   xdata size           =        10     ------

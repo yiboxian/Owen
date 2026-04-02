@@ -11,21 +11,23 @@
 #define ENCODER_DIR_PULSE_2       		(PWMC_ENCODER_CH1P_P40)     // PULSE ?????????
 #define ENCODER_DIR_DIR_2           	(PWMC_ENCODER_CH2P_P42) 
 
-int16 encoder_data_dir_1;
-int16 encoder_data_dir_2;
+
 
 float speed_L=0,speed_R=0,speed_avl=0;
 float speed_L_next=0,speed_R_next=0,speed_avl_next;
 int16 lastspeed_L=0,lastspeed_R=0;
 int32 distance_text=0;
 
+int16 encoder_data_dir_1 = 0;
+int16 encoder_data_dir_2 = 0;
+
 void ENC_Init(void)
 {
 	encoder_quad_init(ENCODER_DIR_1,ENCODER_DIR_DIR_1,ENCODER_DIR_PULSE_1);
 	encoder_quad_init(ENCODER_DIR_2,ENCODER_DIR_DIR_2,ENCODER_DIR_PULSE_2);
 	// pit_ms_init(PIT_CH, 100, pit_handler);
-	initSlidingAverage(&filter_Left,6);  // 初始化滤波器
-	initSlidingAverage(&filter_Right,6);
+	//initSlidingAverage(&filter_Left,6);  // 初始化滤波器
+	//initSlidingAverage(&filter_Right,6);
 }
 
 // void ENC_handler (void)
@@ -43,8 +45,8 @@ void ENC_Init(void)
 
 
 
-SlidingAverageFilter filter_Left;
-SlidingAverageFilter filter_Right;
+//SlidingAverageFilter filter_Left;
+//SlidingAverageFilter filter_Right;
 
 void encoder_update(void)
 {
@@ -55,8 +57,8 @@ void encoder_update(void)
     encoder_clear_count(ENCODER_DIR_1);                                		// 清空编码器计数
     encoder_clear_count(ENCODER_DIR_2);                                		// 清空编码器计数
 	//1-一阶低通滤波
-	speed_L=(0.9*speed_L + 0.1*lastspeed_L);
 	speed_R=(0.9*speed_R + 0.1*lastspeed_R);
+	speed_L=(0.9*speed_L + 0.1*lastspeed_L);
 	lastspeed_L = speed_L;
 	lastspeed_R = speed_R;
 	 
@@ -121,3 +123,7 @@ void slidingAverage(float now_speed, float* avg_speed, SlidingAverageFilter* fil
     // 计算并返回当前窗口的平均值
     *avg_speed = filter->sum / filter->count;
 }
+//void pit_handler (void)
+//{
+//    
+//}

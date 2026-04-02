@@ -1,12 +1,12 @@
-C251 COMPILER V5.60.0,  wifi                                                               31/03/26  11:23:40  PAGE 1   
+C251 COMPILER V5.60.0,  wifi                                                               01/04/26  17:02:29  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE wifi
 OBJECT MODULE PLACED IN .\out_file\wifi.obj
-COMPILER INVOKED BY: D:\Software\Keil5\C251\BIN\C251.EXE ..\code\wifi.c LARGE FLOAT64 ROM(HUGE) WARNINGLEVEL(3) OPTIMIZE
-                    -(0,SIZE) BROWSE INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries
-                    -\zf_driver;..\user;..\code;..\..\libraries\zf_components\stc32g_usb_lib;..\..\libraries\zf_components\seekfree_assistant
-                    -) DEBUG PRINT(.\out_file\wifi.lst) OBJECT(.\out_file\wifi.obj) 
+COMPILER INVOKED BY: D:\Keil5\C251\BIN\C251.EXE ..\code\wifi.c LARGE FLOAT64 ROM(HUGE) WARNINGLEVEL(3) OPTIMIZE(0,SIZE) 
+                    -BROWSE INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_drive
+                    -r;..\user;..\code;..\..\libraries\zf_components\stc32g_usb_lib;..\..\libraries\zf_components\seekfree_assistant) DEBUG P
+                    -RINT(.\out_file\wifi.lst) OBJECT(.\out_file\wifi.obj) 
 
 stmt  level    source
 

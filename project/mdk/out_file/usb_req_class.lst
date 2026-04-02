@@ -1,13 +1,12 @@
-C251 COMPILER V5.60.0,  usb_req_class                                                      31/03/26  11:23:37  PAGE 1   
+C251 COMPILER V5.60.0,  usb_req_class                                                      31/03/26  19:43:45  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE usb_req_class
 OBJECT MODULE PLACED IN .\out_file\usb_req_class.obj
-COMPILER INVOKED BY: D:\Software\Keil5\C251\BIN\C251.EXE ..\..\libraries\zf_components\stc32g_usb_lib\usb_req_class.c LA
-                    -RGE FLOAT64 ROM(HUGE) WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_compon
-                    -ents;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user;..\code;..\..\libraries\zf_components\stc32g_usb_lib;..
-                    -\..\libraries\zf_components\seekfree_assistant) DEBUG PRINT(.\out_file\usb_req_class.lst) OBJECT(.\out_file\usb_req_clas
-                    -s.obj) 
+COMPILER INVOKED BY: D:\Keil5\C251\BIN\C251.EXE ..\..\libraries\zf_components\stc32g_usb_lib\usb_req_class.c LARGE FLOAT
+                    -64 ROM(HUGE) WARNINGLEVEL(3) OPTIMIZE(0,SIZE) BROWSE INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\.
+                    -.\libraries\zf_device;..\..\libraries\zf_driver;..\user;..\code;..\..\libraries\zf_components\stc32g_usb_lib;..\..\libra
+                    -ries\zf_components\seekfree_assistant) DEBUG PRINT(.\out_file\usb_req_class.lst) OBJECT(.\out_file\usb_req_class.obj) 
 
 stmt  level    source
 
@@ -66,9 +65,9 @@ stmt  level    source
    53   1      }
    54          
    55          void usb_get_line_coding()
-C251 COMPILER V5.60.0,  usb_req_class                                                      31/03/26  11:23:37  PAGE 2   
-
    56          {
+C251 COMPILER V5.60.0,  usb_req_class                                                      31/03/26  19:43:45  PAGE 2   
+
    57   1          if ((DeviceState != DEVSTATE_CONFIGURED) ||
    58   1              (Setup.bmRequestType != (IN_DIRECT | CLASS_REQUEST | INTERFACE_RECIPIENT)))
    59   1          {

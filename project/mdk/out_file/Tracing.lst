@@ -1,12 +1,12 @@
-C251 COMPILER V5.60.0,  Tracing                                                            31/03/26  11:23:40  PAGE 1   
+C251 COMPILER V5.60.0,  Tracing                                                            01/04/26  17:02:28  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE Tracing
 OBJECT MODULE PLACED IN .\out_file\Tracing.obj
-COMPILER INVOKED BY: D:\Software\Keil5\C251\BIN\C251.EXE ..\code\Tracing.c LARGE FLOAT64 ROM(HUGE) WARNINGLEVEL(3) OPTIM
-                    -IZE(0,SIZE) BROWSE INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\librar
-                    -ies\zf_driver;..\user;..\code;..\..\libraries\zf_components\stc32g_usb_lib;..\..\libraries\zf_components\seekfree_assist
-                    -ant) DEBUG PRINT(.\out_file\Tracing.lst) OBJECT(.\out_file\Tracing.obj) 
+COMPILER INVOKED BY: D:\Keil5\C251\BIN\C251.EXE ..\code\Tracing.c LARGE FLOAT64 ROM(HUGE) WARNINGLEVEL(3) OPTIMIZE(0,SIZ
+                    -E) BROWSE INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_dr
+                    -iver;..\user;..\code;..\..\libraries\zf_components\stc32g_usb_lib;..\..\libraries\zf_components\seekfree_assistant) DEBU
+                    -G PRINT(.\out_file\Tracing.lst) OBJECT(.\out_file\Tracing.obj) 
 
 stmt  level    source
 

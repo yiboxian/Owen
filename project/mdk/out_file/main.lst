@@ -1,12 +1,12 @@
-C251 COMPILER V5.60.0,  main                                                               31/03/26  11:24:54  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               02/04/26  17:13:59  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
 OBJECT MODULE PLACED IN .\out_file\main.obj
-COMPILER INVOKED BY: D:\Software\Keil5\C251\BIN\C251.EXE ..\user\main.c LARGE FLOAT64 ROM(HUGE) WARNINGLEVEL(3) OPTIMIZE
-                    -(0,SIZE) BROWSE INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries
-                    -\zf_driver;..\user;..\code;..\..\libraries\zf_components\stc32g_usb_lib;..\..\libraries\zf_components\seekfree_assistant
-                    -) DEBUG PRINT(.\out_file\main.lst) OBJECT(.\out_file\main.obj) 
+COMPILER INVOKED BY: D:\Keil5\C251\BIN\C251.EXE ..\user\main.c LARGE FLOAT64 ROM(HUGE) WARNINGLEVEL(3) OPTIMIZE(0,SIZE) 
+                    -BROWSE INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_drive
+                    -r;..\user;..\code;..\..\libraries\zf_components\stc32g_usb_lib;..\..\libraries\zf_components\seekfree_assistant) DEBUG P
+                    -RINT(.\out_file\main.lst) OBJECT(.\out_file\main.obj) 
 
 stmt  level    source
 
@@ -53,66 +53,70 @@ stmt  level    source
    39          // #include "ADC.h"
    40          
    41          #define PIT_CH (TIM1_PIT)
-   42          void pit_hanlder (void);
-   43          // 陀螺仪型号为IMU963RA 因兼容性改为IMU660RB//
-   44          void main(void)
-   45          {
-   46   1      
-   47   1          clock_init(SYSTEM_CLOCK_96M); // 时钟配置及系统初始化<务必保留>
-   48   1          debug_init();                 // 调试串口信息初始化
-   49   1          gpio_init(IO_P52, GPO, 0, GPO_PUSH_PULL);
-   50   1          //imu660rb_init();
-   51   1              Motor_Init();
-   52   1              Key_Init();
-   53   1          // // // 此处编写用户代码 例如外设初始化代码等
-   54   1          // // tim0_irq_handler = pit_hanlder;       
-C251 COMPILER V5.60.0,  main                                                               31/03/26  11:24:54  PAGE 2   
+   42          // 陀螺仪型号为IMU963RA 因兼容性改为IMU660RB//
+   43          void main(void)
+   44          {
+   45   1      
+   46   1          clock_init(SYSTEM_CLOCK_96M); // 时钟配置及系统初始化<务必保留>
+   47   1          debug_init();                 // 调试串口信息初始化
+   48   1          gpio_init(IO_P52, GPO, 0, GPO_PUSH_PULL);
+   49   1          //imu660rb_init();
+   50   1              Motor_Init();
+   51   1              ENC_Init();
+   52   1              my_adc_init();
+   53   1              Key_Init();
+   54   1          // // // 此处编写用户代码 例如外设初始化代码等
+C251 COMPILER V5.60.0,  main                                                               02/04/26  17:13:59  PAGE 2   
 
    55   1              pit_ms_init(PIT_CH, 10, encoder_update);
-   56   1          // //       siai_adc_all_sample();
-   57   1          // my_adc_init();
-   58   1          // ENC_Init();
-   59   1      //    pit_ms_init(PIT_CH, 5, pit_hanlder);
+   56   1      
+   57   1      
+   58   1      
+   59   1      
    60   1      
    61   1      
-   62   1          // // 此处编写用户代码 例如外设初始化代码等
-   63   1      
-   64   1          // 此处编写用户代码 例如外设初始化代码等
-   65   1      
-   66   1          while (1)
-   67   1          {
-   68   2      //        Motor_Control();
-   69   2              // siai_adc_all_sample();
-   70   2              // adc_normalizing();
-   71   2                      Motor_R(2000);
-   72   2                      Motor_L(2000);
-   73   2                      Key_Case();
-   74   2      
-   75   2      //        printf("encoder_data_dir_1 counter %d .\r\n", -encoder_data_dir_1); // 输出编码器计数信息
-   76   2      //        printf("encoder_data_dir_2 counter %d .\r\n", encoder_data_dir_2);  // 输出编码器计数信息
-   77   2      
-   78   2      //        printf("Norm: L=%.1f, M=%.1f,R=%.1f\r\n", L, M, R);
-   79   2              // 此处编写需要循环执行的代码
-   80   2              //printf("\r\nIMU660RB gyro data:  x=%5d, y=%5d, z=%5d\r\n", imu660rb_gyro_x, imu660rb_gyro_y, im
-             -u660rb_gyro_z);
-   81   2              //printf("\r\nIMU660RB acc data:  x=%5d, y=%5d, z=%5d\r\n", imu660rb_acc_x, imu660rb_acc_y, imu66
-             -0rb_acc_z);
+   62   1      
+   63   1          // // 此处编写用户代码 例如外设初始化代码等
+   64   1      
+   65   1          // 此处编写用户代码 例如外设初始化代码等
+   66   1      
+   67   1          while (1)
+   68   1          {   
+   69   2                      Key_Case();
+   70   2              siai_adc_all_sample();
+   71   2              adc_normalizing();
+   72   2              printf("Norm: L=%.1f, M=%.1f,R=%.1f\r\n", L, M, R);
+   73   2              printf("encoder_data_L counter %d .\r\n", lastspeed_L);  // 输出编码器计数信息
+   74   2                      printf("encoder_data_R counter %d .\r\n", lastspeed_R);  // 输出编码器计数信息
+   75   2                      printf("speed_avl counter %d .\r\n", speed_avl);  // 输出编码器计数信息
+   76   2      
+   77   2                      system_delay_ms(300);
+   78   2      //        Motor_Control();
+   79   2      
+   80   2              
+   81   2      
    82   2      
-   83   2          }
-   84   1      }
-   85          void pit_hanlder (void)
-   86          {
-   87   1          imu660rb_get_acc();                                                         // 获取 imu660rb 的加速度
-             -测量数值
-   88   1          imu660rb_get_gyro();                                                        // 获取 imu660rb 的角速度
-             -测量数值
-   89   1      }
+   83   2      
+   84   2      
+   85   2      
+   86   2      
+   87   2             
+   88   2              // 此处编写需要循环执行的代码
+   89   2              //printf("\r\nIMU660RB gyro data:  x=%5d, y=%5d, z=%5d\r\n", imu660rb_gyro_x, imu660rb_gyro_y, im
+             -u660rb_gyro_z);
+   90   2              //printf("\r\nIMU660RB acc data:  x=%5d, y=%5d, z=%5d\r\n", imu660rb_acc_x, imu660rb_acc_y, imu66
+             -0rb_acc_z);
+   91   2      
+   92   2          }
+   93   1      }
+   94          
+   95          
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
   code size            =    ------     ------
-  ecode size           =       177     ------
+  ecode size           =       399     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
@@ -126,7 +130,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =         2     ------
+  hconst size          =       117     ------
 End of Module Information.
 
 

@@ -1,12 +1,12 @@
-C251 COMPILER V5.60.0,  PD_ENC_SDI                                                         31/03/26  11:23:38  PAGE 1   
+C251 COMPILER V5.60.0,  PD_ENC_SDI                                                         01/04/26  17:07:29  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE PD_ENC_SDI
 OBJECT MODULE PLACED IN .\out_file\PD_ENC_SDI.obj
-COMPILER INVOKED BY: D:\Software\Keil5\C251\BIN\C251.EXE ..\code\PD_ENC_SDI.c LARGE FLOAT64 ROM(HUGE) WARNINGLEVEL(3) OP
-                    -TIMIZE(0,SIZE) BROWSE INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\lib
-                    -raries\zf_driver;..\user;..\code;..\..\libraries\zf_components\stc32g_usb_lib;..\..\libraries\zf_components\seekfree_ass
-                    -istant) DEBUG PRINT(.\out_file\PD_ENC_SDI.lst) OBJECT(.\out_file\PD_ENC_SDI.obj) 
+COMPILER INVOKED BY: D:\Keil5\C251\BIN\C251.EXE ..\code\PD_ENC_SDI.c LARGE FLOAT64 ROM(HUGE) WARNINGLEVEL(3) OPTIMIZE(0,
+                    -SIZE) BROWSE INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf
+                    -_driver;..\user;..\code;..\..\libraries\zf_components\stc32g_usb_lib;..\..\libraries\zf_components\seekfree_assistant) D
+                    -EBUG PRINT(.\out_file\PD_ENC_SDI.lst) OBJECT(.\out_file\PD_ENC_SDI.obj) 
 
 stmt  level    source
 
@@ -24,130 +24,136 @@ stmt  level    source
    11          #define ENCODER_DIR_PULSE_2                     (PWMC_ENCODER_CH1P_P40)     // PULSE ?????????
    12          #define ENCODER_DIR_DIR_2               (PWMC_ENCODER_CH2P_P42) 
    13          
-   14          int16 encoder_data_dir_1;
-   15          int16 encoder_data_dir_2;
-   16          
-   17          float speed_L=0,speed_R=0,speed_avl=0;
-   18          float speed_L_next=0,speed_R_next=0,speed_avl_next;
-   19          int16 lastspeed_L=0,lastspeed_R=0;
-   20          int32 distance_text=0;
-   21          
-   22          void ENC_Init(void)
-   23          {
-   24   1              encoder_quad_init(ENCODER_DIR_1,ENCODER_DIR_DIR_1,ENCODER_DIR_PULSE_1);
-   25   1              encoder_quad_init(ENCODER_DIR_2,ENCODER_DIR_DIR_2,ENCODER_DIR_PULSE_2);
-   26   1              // pit_ms_init(PIT_CH, 100, pit_handler);
-   27   1              initSlidingAverage(&filter_Left,6);  // 初始化滤波器
-   28   1              initSlidingAverage(&filter_Right,6);
-   29   1      }
-   30          
-   31          // void ENC_handler (void)
-   32          // {
-   33          //     encoder_data_dir_1 = encoder_get_count(ENCODER_DIR_1);                  // 获取编码器计数
-   34          //     encoder_data_dir_2 = encoder_get_count(ENCODER_DIR_2);                  // 获取编码器计数
-   35          
-   36          //     encoder_clear_count(ENCODER_DIR_1);                                              // 清空编码器计数
-   37          //     encoder_clear_count(ENCODER_DIR_2);                                              // 清空编码器计数
-   38                  
-   39          //      slidingAverage((float)-encoder_data_dir_1, &speed_L, &filter_Left);
-   40          //     slidingAverage((float)encoder_data_dir_2, &speed_R, &filter_Right);
-   41                  
-   42          // }
-   43          
-   44          
+   14          
+   15          
+   16          float speed_L=0,speed_R=0,speed_avl=0;
+   17          float speed_L_next=0,speed_R_next=0,speed_avl_next;
+   18          int16 lastspeed_L=0,lastspeed_R=0;
+   19          int32 distance_text=0;
+   20          
+   21          int16 encoder_data_dir_1 = 0;
+   22          int16 encoder_data_dir_2 = 0;
+   23          
+   24          void ENC_Init(void)
+   25          {
+   26   1              encoder_quad_init(ENCODER_DIR_1,ENCODER_DIR_DIR_1,ENCODER_DIR_PULSE_1);
+   27   1              encoder_quad_init(ENCODER_DIR_2,ENCODER_DIR_DIR_2,ENCODER_DIR_PULSE_2);
+   28   1              // pit_ms_init(PIT_CH, 100, pit_handler);
+   29   1              //initSlidingAverage(&filter_Left,6);  // 初始化滤波器
+   30   1              //initSlidingAverage(&filter_Right,6);
+   31   1      }
+   32          
+   33          // void ENC_handler (void)
+   34          // {
+   35          //     encoder_data_dir_1 = encoder_get_count(ENCODER_DIR_1);                  // 获取编码器计数
+   36          //     encoder_data_dir_2 = encoder_get_count(ENCODER_DIR_2);                  // 获取编码器计数
+   37          
+   38          //     encoder_clear_count(ENCODER_DIR_1);                                              // 清空编码器计数
+   39          //     encoder_clear_count(ENCODER_DIR_2);                                              // 清空编码器计数
+   40                  
+   41          //      slidingAverage((float)-encoder_data_dir_1, &speed_L, &filter_Left);
+   42          //     slidingAverage((float)encoder_data_dir_2, &speed_R, &filter_Right);
+   43                  
+   44          // }
    45          
-   46          SlidingAverageFilter filter_Left;
-   47          SlidingAverageFilter filter_Right;
-   48          
-   49          void encoder_update(void)
-   50          {
-   51   1              //0-获取速度&清零
-   52   1              speed_R = (0.85f*encoder_get_count(ENCODER_DIR_1));
-   53   1              speed_L = (0.85f*encoder_get_count(ENCODER_DIR_2));
-   54   1              
-   55   1          encoder_clear_count(ENCODER_DIR_1);                                         // 清空编码器计数
-C251 COMPILER V5.60.0,  PD_ENC_SDI                                                         31/03/26  11:23:38  PAGE 2   
+   46          
+   47          
+   48          //SlidingAverageFilter filter_Left;
+   49          //SlidingAverageFilter filter_Right;
+   50          
+   51          void encoder_update(void)
+   52          {
+   53   1              //0-获取速度&清零
+   54   1              speed_R = (0.85f*encoder_get_count(ENCODER_DIR_1));
+   55   1              speed_L = (0.85f*encoder_get_count(ENCODER_DIR_2));
+C251 COMPILER V5.60.0,  PD_ENC_SDI                                                         01/04/26  17:07:29  PAGE 2   
 
-   56   1          encoder_clear_count(ENCODER_DIR_2);                                         // 清空编码器计数
-   57   1              //1-一阶低通滤波
-   58   1              speed_L=(0.9*speed_L + 0.1*lastspeed_L);
-   59   1              speed_R=(0.9*speed_R + 0.1*lastspeed_R);
-   60   1              lastspeed_L = speed_L;
-   61   1              lastspeed_R = speed_R;
-   62   1               
-   63   1              speed_avl = (speed_L + speed_R)/2;
-   64   1              
-   65   1              distance_text += (int32)speed_avl;
-   66   1      }
-   67          //滤波方案2?//
-   68          //void encoder_update(void)
-   69          //{
-   70          //      //0-获取速度&清零
-   71          //      speed_R_next = (float)-encoder_get_count(TIM0_ENCOEDER);
-   72          //      speed_L_next = (float)-encoder_get_count(TIM3_ENCOEDER);
-   73          //      
-   74          //      encoder_clear_count(TIM3_ENCOEDER);
-   75          //      encoder_clear_count(TIM0_ENCOEDER);
-   76          //      //1-滑动平均滤波
-   77          //      slidingAverage(speed_L_next,&speed_L, &filter_Left);
-   78          //      slidingAverage(speed_R_next,&speed_R, &filter_Right);
-   79          
-   80          //      //2-实际速度及其距离
-   81          //      speed_avl_next = (speed_R_next + speed_L_next)/2;
-   82          //      speed_avl = (speed_L + speed_R)/2;
-   83          //      
-   84          //      
-   85          //      distance_text += (int32)speed_avl;
-   86          //}
-   87          
-   88          void initSlidingAverage(SlidingAverageFilter* filter, int N) {
-   89   1               uint8 Win_i=0;
-   90   1          if (N > MAX_WINDOW_SIZE) {
-   91   2              N = MAX_WINDOW_SIZE; // 限制窗口大小不能超过最大值
-   92   2          }
-   93   1      
-   94   1          for (Win_i = 0; Win_i < MAX_WINDOW_SIZE; Win_i++) {
-   95   2              filter->buffer[Win_i] = 0.0f;
-   96   2          }
-   97   1          filter->sum = 0.0f;
-   98   1          filter->index = 0;
-   99   1          filter->count = 0;
-  100   1          filter->window_size = N;
-  101   1      }
-  102          
-  103          void slidingAverage(float now_speed, float* avg_speed, SlidingAverageFilter* filter) {
-  104   1          // 从和中减去即将被替换的旧值
-  105   1          filter->sum -= filter->buffer[filter->index];
-  106   1      
-  107   1          // 将新的值插入缓冲区
-  108   1          filter->buffer[filter->index] = now_speed;
-  109   1      
-  110   1          // 更新和
-  111   1          filter->sum += now_speed;
-  112   1      
-  113   1          // 更新索引，使其循环回到起始位置
-  114   1          filter->index = (filter->index + 1) % filter->window_size;
-  115   1      
-  116   1          // 如果窗口没有满，增加计数
-  117   1          if (filter->count < filter->window_size) {
-  118   2              filter->count++;
-  119   2          }
-  120   1      
-  121   1          // 计算并返回当前窗口的平均值
-C251 COMPILER V5.60.0,  PD_ENC_SDI                                                         31/03/26  11:23:38  PAGE 3   
+   56   1              
+   57   1          encoder_clear_count(ENCODER_DIR_1);                                         // 清空编码器计数
+   58   1          encoder_clear_count(ENCODER_DIR_2);                                         // 清空编码器计数
+   59   1              //1-一阶低通滤波
+   60   1              speed_R=(0.9*speed_R + 0.1*lastspeed_R);
+   61   1              speed_L=(0.9*speed_L + 0.1*lastspeed_L);
+   62   1              lastspeed_L = speed_L;
+   63   1              lastspeed_R = speed_R;
+   64   1               
+   65   1              speed_avl = (speed_L + speed_R)/2;
+   66   1              
+   67   1              distance_text += (int32)speed_avl;
+   68   1      }
+   69          //滤波方案2?//
+   70          //void encoder_update(void)
+   71          //{
+   72          //      //0-获取速度&清零
+   73          //      speed_R_next = (float)-encoder_get_count(TIM0_ENCOEDER);
+   74          //      speed_L_next = (float)-encoder_get_count(TIM3_ENCOEDER);
+   75          //      
+   76          //      encoder_clear_count(TIM3_ENCOEDER);
+   77          //      encoder_clear_count(TIM0_ENCOEDER);
+   78          //      //1-滑动平均滤波
+   79          //      slidingAverage(speed_L_next,&speed_L, &filter_Left);
+   80          //      slidingAverage(speed_R_next,&speed_R, &filter_Right);
+   81          
+   82          //      //2-实际速度及其距离
+   83          //      speed_avl_next = (speed_R_next + speed_L_next)/2;
+   84          //      speed_avl = (speed_L + speed_R)/2;
+   85          //      
+   86          //      
+   87          //      distance_text += (int32)speed_avl;
+   88          //}
+   89          
+   90          void initSlidingAverage(SlidingAverageFilter* filter, int N) {
+   91   1               uint8 Win_i=0;
+   92   1          if (N > MAX_WINDOW_SIZE) {
+   93   2              N = MAX_WINDOW_SIZE; // 限制窗口大小不能超过最大值
+   94   2          }
+   95   1      
+   96   1          for (Win_i = 0; Win_i < MAX_WINDOW_SIZE; Win_i++) {
+   97   2              filter->buffer[Win_i] = 0.0f;
+   98   2          }
+   99   1          filter->sum = 0.0f;
+  100   1          filter->index = 0;
+  101   1          filter->count = 0;
+  102   1          filter->window_size = N;
+  103   1      }
+  104          
+  105          void slidingAverage(float now_speed, float* avg_speed, SlidingAverageFilter* filter) {
+  106   1          // 从和中减去即将被替换的旧值
+  107   1          filter->sum -= filter->buffer[filter->index];
+  108   1      
+  109   1          // 将新的值插入缓冲区
+  110   1          filter->buffer[filter->index] = now_speed;
+  111   1      
+  112   1          // 更新和
+  113   1          filter->sum += now_speed;
+  114   1      
+  115   1          // 更新索引，使其循环回到起始位置
+  116   1          filter->index = (filter->index + 1) % filter->window_size;
+  117   1      
+  118   1          // 如果窗口没有满，增加计数
+  119   1          if (filter->count < filter->window_size) {
+  120   2              filter->count++;
+  121   2          }
+C251 COMPILER V5.60.0,  PD_ENC_SDI                                                         01/04/26  17:07:29  PAGE 3   
 
-  122   1          *avg_speed = filter->sum / filter->count;
-  123   1      }
+  122   1      
+  123   1          // 计算并返回当前窗口的平均值
+  124   1          *avg_speed = filter->sum / filter->count;
+  125   1      }
+  126          //void pit_handler (void)
+  127          //{
+  128          //    
+  129          //}
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
   code size            =    ------     ------
-  ecode size           =      1055     ------
+  ecode size           =      1023     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
-  xdata size           =        99     ------
+  xdata size           =        55     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
   bit size             =    ------     ------
@@ -157,7 +163,7 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =        68     ------
+  hconst size          =        82     ------
 End of Module Information.
 
 
