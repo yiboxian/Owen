@@ -40,7 +40,8 @@ void Key_Case(void)
 	}
 	if(key1_flag)   
         {	
-			Motor_L(2000);
+			
+			
 			//Motor_R(1000);
             key1_flag = 0;//使用按键之后，应该清除标志位
 			test1++;

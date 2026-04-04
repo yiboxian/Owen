@@ -38,7 +38,7 @@
 // #include "Motor.h"
 // #include "ADC.h"
 
-#define PIT_CH (TIM1_PIT)
+#define PIT_CH (TIM0_PIT)
 // 陀螺仪型号为IMU963RA 因兼容性改为IMU660RB//
 void main(void)
 {
@@ -46,13 +46,17 @@ void main(void)
     clock_init(SYSTEM_CLOCK_96M); // 时钟配置及系统初始化<务必保留>
     debug_init();                 // 调试串口信息初始化
     gpio_init(IO_P52, GPO, 0, GPO_PUSH_PULL);
+	// 逐飞助手初始化
+	seekfree_assistant_init();
+	// 设置DEBUG串口输出
+	seekfree_assistant_interface_init(SEEKFREE_ASSISTANT_DEBUG_UART);
     //imu660rb_init();
 	Motor_Init();
 	ENC_Init();
 	my_adc_init();
 	Key_Init();
     // // // 此处编写用户代码 例如外设初始化代码等
-	pit_ms_init(PIT_CH, 10, encoder_update);
+	pit_ms_init(PIT_CH, 5, encoder_update);
 
 
 
@@ -66,15 +70,19 @@ void main(void)
 
     while (1)
     {	
-		Key_Case();
+
+		seekfree_assistant_data_analysis();
+		duty = seekfree_assistant_parameter[0];
+		Motor_R(duty);
+		//Key_Case();
         siai_adc_all_sample();
         adc_normalizing();
         printf("Norm: L=%.1f, M=%.1f,R=%.1f\r\n", L, M, R);
-        printf("encoder_data_L counter %d .\r\n", lastspeed_L);  // 输出编码器计数信息
-		printf("encoder_data_R counter %d .\r\n", lastspeed_R);  // 输出编码器计数信息
- 		printf("speed_avl counter %d .\r\n", speed_avl);  // 输出编码器计数信息
+        //printf("duty_R:%d\n", duty);  // 输出编码器计数信息
+		printf("encoder_data_R:%d\n", lastspeed_R);  // 输出编码器计数信息
 
-		system_delay_ms(300);
+
+
 //        Motor_Control();
 
         
@@ -91,5 +99,3 @@ void main(void)
 
     }
 }
-
-
