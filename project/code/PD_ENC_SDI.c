@@ -15,16 +15,15 @@
 
 float speed_L=0,speed_R=0,speed_avl=0;
 float speed_L_next=0,speed_R_next=0,speed_avl_next;
-int16 lastspeed_L=0,lastspeed_R=0;
+float lastspeed_L=0,lastspeed_R=0;
 int32 distance_text=0;
 
-int16 encoder_data_dir_1 = 0;
-int16 encoder_data_dir_2 = 0;
+
 
 void ENC_Init(void)
 {
-	encoder_quad_init(ENCODER_DIR_1,ENCODER_DIR_DIR_1,ENCODER_DIR_PULSE_1);
-	encoder_quad_init(ENCODER_DIR_2,ENCODER_DIR_DIR_2,ENCODER_DIR_PULSE_2);
+	encoder_dir_init(ENCODER_DIR_1,ENCODER_DIR_DIR_1,ENCODER_DIR_PULSE_1);
+	encoder_dir_init(ENCODER_DIR_2,ENCODER_DIR_DIR_2,ENCODER_DIR_PULSE_2);
 	// pit_ms_init(PIT_CH, 100, pit_handler);
 	//initSlidingAverage(&filter_Left,6);  // 初始化滤波器
 	//initSlidingAverage(&filter_Right,6);
@@ -38,9 +37,9 @@ void ENC_Init(void)
 //     encoder_clear_count(ENCODER_DIR_1);                                		// 清空编码器计数
 //     encoder_clear_count(ENCODER_DIR_2);                                		// 清空编码器计数
 	
-// 	slidingAverage((float)-encoder_data_dir_1, &speed_L, &filter_Left);
+// 	   slidingAverage((float)-encoder_data_dir_1, &speed_L, &filter_Left);
 //     slidingAverage((float)encoder_data_dir_2, &speed_R, &filter_Right);
-	
+
 // }
 
 
@@ -57,8 +56,8 @@ void encoder_update(void)
     encoder_clear_count(ENCODER_DIR_1);                                		// 清空编码器计数
     encoder_clear_count(ENCODER_DIR_2);                                		// 清空编码器计数
 	//1-一阶低通滤波
-	speed_R=(0.9*speed_R + 0.1*lastspeed_R);
-	speed_L=(0.9*speed_L + 0.1*lastspeed_L);
+	speed_R=(0.2*speed_R + 0.8*lastspeed_R);
+	speed_L=(0.2*speed_L + 0.8*lastspeed_L);
 	lastspeed_L = speed_L;
 	lastspeed_R = speed_R;
 	 

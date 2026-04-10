@@ -26,7 +26,7 @@ extern int16 encoder_data_dir_1;
 extern int16 encoder_data_dir_2;
 extern float speed_L,speed_R,speed_avl;
 extern float speed_L_next,speed_R_next,speed_avl_next;
-extern int16 lastspeed_L,lastspeed_R;
+extern float lastspeed_L,lastspeed_R;
 extern int32 distance_text;
 
 

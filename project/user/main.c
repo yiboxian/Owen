@@ -40,6 +40,9 @@
 
 #define PIT_CH (TIM0_PIT)
 // 陀螺仪型号为IMU963RA 因兼容性改为IMU660RB//
+
+int16 target_R=0;
+
 void main(void)
 {
 
@@ -72,19 +75,26 @@ void main(void)
     {	
 
 		seekfree_assistant_data_analysis();
-		duty = seekfree_assistant_parameter[0];
-		Motor_R(duty);
+		target_R = seekfree_assistant_parameter[0];
+		pid_loop_speed.Kp = seekfree_assistant_parameter[1];
+		pid_loop_speed.Ki = seekfree_assistant_parameter[2];
+		loop_speed_LR(0,target_R);
+        Motor_R(out_R);
+		//Motor_R(duty);
 		//Key_Case();
         siai_adc_all_sample();
         adc_normalizing();
-        printf("Norm: L=%.1f, M=%.1f,R=%.1f\r\n", L, M, R);
+
         //printf("duty_R:%d\n", duty);  // 输出编码器计数信息
-		printf("encoder_data_R:%d\n", lastspeed_R);  // 输出编码器计数信息
-
-
+		printf("speed_R:%.2f,out_R:%.2f\n",speed_R,out_R);  // 输出编码器计数信息
+		//printf("dec_speed_loop_R:%.2f\n",dec_speed_loop_R);
+		//printf("err_speed_R:%d,err_speed_R_last:%d\n", err_speed_R,err_speed_R_last);
+		printf("Speed_loop_Kp:%.2f\n",pid_loop_speed.Kp);
+		printf("Speed_loop_Ki:%.2f\n",pid_loop_speed.Ki);
+		//printf("dec_speed_loop_R:%.2f, out_R:%.2f, T_speed:%d\n",dec_speed_loop_R,out_R,miyan);
 
 //        Motor_Control();
-
+		system_delay_ms(300);
         
 
 

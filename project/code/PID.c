@@ -5,6 +5,9 @@
 int16 err_speed=0;
 float out_L=0,out_R=0;
 
+int16 err_speed_R_last=0,err_speed_R=0;
+float dec_speed_loop_R=0;
+
 //方向环
 float expect_gyro=0;
 float correct_L=0;
@@ -40,12 +43,13 @@ void loop_speed(void)
 }
 
 //速度环差速函数//
+//////此处形参为编码器值,非PWM脉冲值//////
 void loop_speed_LR(int16 speed_L_t,int16 speed_R_t) 
 {
 	static int16 err_speed_L_last=0,err_speed_L=0;
 	static float dec_speed_loop_L=0;
-	static int16 err_speed_R_last=0,err_speed_R=0;
-	static float dec_speed_loop_R=0;
+	//static int16 err_speed_R_last=0,err_speed_R=0;
+	//static float dec_speed_loop_R=0;
 	
 	
 	//0-编码器输入更新
@@ -86,8 +90,8 @@ void loop_speed_LR(int16 speed_L_t,int16 speed_R_t)
 	
   if(out_L>9900 ){out_L=9900; }
 	if(out_L<-9900){out_L=-9900;}
-	if(out_R>9900 ){out_R=9900; }
-	if(out_R<-9900){out_R=-9900;}
+	if(out_R>3000 ){out_R=3000; }
+	if(out_R<-2000){out_R=-2000;}
 }
 
 

@@ -14,7 +14,9 @@ extern struct PID
 
 extern int16 err_speed;				//Îó²î
 extern float out_L,out_R;			//Êä³ö
+void loop_speed_LR(int16 speed_L_t,int16 speed_R_t);
 
-
+extern int16 err_speed_R_last,err_speed_R;
+extern float dec_speed_loop_R;
 
 #endif
