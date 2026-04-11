@@ -38,7 +38,7 @@
 // #include "Motor.h"
 // #include "ADC.h"
 
-#define PIT_CH (TIM0_PIT)
+#define PIT_CH (TIM1_PIT)
 // 陀螺仪型号为IMU963RA 因兼容性改为IMU660RB//
 
 int16 target_R=0;
@@ -48,19 +48,20 @@ void main(void)
 
     clock_init(SYSTEM_CLOCK_96M); // 时钟配置及系统初始化<务必保留>
     debug_init();                 // 调试串口信息初始化
-    gpio_init(IO_P52, GPO, 0, GPO_PUSH_PULL);
-	// 逐飞助手初始化
-	seekfree_assistant_init();
-	// 设置DEBUG串口输出
-	seekfree_assistant_interface_init(SEEKFREE_ASSISTANT_DEBUG_UART);
-    //imu660rb_init();
-	Motor_Init();
 	ENC_Init();
-	my_adc_init();
-	Key_Init();
+	
+   gpio_init(IO_P52, GPO, 0, GPO_PUSH_PULL);
+//	// 逐飞助手初始化
+	seekfree_assistant_init();
+//	// 设置DEBUG串口输出
+	seekfree_assistant_interface_init(SEEKFREE_ASSISTANT_DEBUG_UART);
+//    //imu660rb_init();
+	Motor_Init();
+//	my_adc_init();
+//	Key_Init();
     // // // 此处编写用户代码 例如外设初始化代码等
-	pit_ms_init(PIT_CH, 5, encoder_update);
-
+	pit_ms_init(PIT_CH, 2, encoder_update);
+	
 
 
 
@@ -75,26 +76,27 @@ void main(void)
     {	
 
 		seekfree_assistant_data_analysis();
-		target_R = seekfree_assistant_parameter[0];
-		pid_loop_speed.Kp = seekfree_assistant_parameter[1];
-		pid_loop_speed.Ki = seekfree_assistant_parameter[2];
-		loop_speed_LR(0,target_R);
-        Motor_R(out_R);
-		//Motor_R(duty);
+		//target_R = seekfree_assistant_parameter[0];
+		//pid_loop_speed.Kp = seekfree_assistant_parameter[1];
+		//pid_loop_speed.Ki = seekfree_assistant_parameter[2];
+		//loop_speed_LR(0,target_R);
+        //Motor_R(out_R);
+		Motor_R(1800);
+		//Motor_L(1800);
 		//Key_Case();
-        siai_adc_all_sample();
-        adc_normalizing();
+        //siai_adc_all_sample();
+        //adc_normalizing();
 
         //printf("duty_R:%d\n", duty);  // 输出编码器计数信息
 		printf("speed_R:%.2f,out_R:%.2f\n",speed_R,out_R);  // 输出编码器计数信息
 		//printf("dec_speed_loop_R:%.2f\n",dec_speed_loop_R);
 		//printf("err_speed_R:%d,err_speed_R_last:%d\n", err_speed_R,err_speed_R_last);
-		printf("Speed_loop_Kp:%.2f\n",pid_loop_speed.Kp);
-		printf("Speed_loop_Ki:%.2f\n",pid_loop_speed.Ki);
+		//printf("Speed_loop_Kp:%.2f\n",pid_loop_speed.Kp);
+		//printf("Speed_loop_Ki:%.2f\n",pid_loop_speed.Ki);
 		//printf("dec_speed_loop_R:%.2f, out_R:%.2f, T_speed:%d\n",dec_speed_loop_R,out_R,miyan);
 
 //        Motor_Control();
-		system_delay_ms(300);
+		system_delay_ms(100);
         
 
 
