@@ -37,38 +37,6 @@ void Wifi_Init(void)
     // 使用高速 WIFI SPI模块时无法使用屏幕（因为引脚有共用）
 
     // 发送测试数据至服务器
-    data_length = wifi_spi_send_buffer(wifi_spi_test_buffer, sizeof(wifi_spi_test_buffer));
-    if(!data_length)
-    {
-        printf("\r\n send success. \r\n");
-    }
-    else
-    {
-        printf("\r\n %d bytes data send failed. \r\n", data_length);
-    }
 
-    while(1)
-    {
-        data_length = wifi_spi_read_buffer(wifi_spi_get_data_buffer, sizeof(wifi_spi_get_data_buffer));
-        if(data_length)                                                     // 如果接收到数据 则进行数据类型判断
-        {
-            printf("\r\n Get data: <%s>. \r\n", wifi_spi_get_data_buffer);
-            
-            // 将数据回显回去
-            if(!wifi_spi_send_buffer(wifi_spi_recv_buffer, sizeof(wifi_spi_recv_buffer)))
-            {
-                if(!wifi_spi_send_buffer(wifi_spi_get_data_buffer, data_length))
-                {
-                    printf("\r\n send success. \r\n");
-                    memset(wifi_spi_get_data_buffer, 0, data_length);           // 数据发送完成 清空数据
-                }
-            }
-            else
-            {
-                printf("\r\n %d bytes data send failed. \r\n", data_length);
-            }
-        }
-        system_delay_ms(100);
-    }
 }
     // 此处编写wifi模块初始化代码

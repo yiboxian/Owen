@@ -123,7 +123,7 @@ void encoder_update(void)
 
 //     // 计算并返回当前窗口的平均值
 //     *avg_speed = filter->sum / filter->count;
-}
+
 //void pit_handler (void)
 //{
 //    

@@ -39,6 +39,8 @@
 // #include "ADC.h"
 
 #define PIT_CH (TIM1_PIT)
+#define LED1 IO_P52
+
 // 陀螺仪型号为IMU963RA 因兼容性改为IMU660RB//
 
 int16 target_R=0;
@@ -49,24 +51,28 @@ void main(void)
     clock_init(SYSTEM_CLOCK_96M); // 时钟配置及系统初始化<务必保留>
     debug_init();                 // 调试串口信息初始化
 	ENC_Init();
-	
-   gpio_init(IO_P52, GPO, 0, GPO_PUSH_PULL);
+	IMU_Init();
+	gpio_init(LED1, GPO, GPIO_HIGH, GPO_PUSH_PULL);
+	while(1)	//零漂解算
+	{	
+		if(null_drift_calculate())
+		printf("null_drift_calculate ok\n");
+		else
+		break;
+		gpio_toggle_level(LED1);
+	}
+
 //	// 逐飞助手初始化
 	seekfree_assistant_init();
 //	// 设置DEBUG串口输出
 	seekfree_assistant_interface_init(SEEKFREE_ASSISTANT_DEBUG_UART);
-//    //imu660rb_init();
+    imu660rb_init();
 	Motor_Init();
 //	my_adc_init();
 //	Key_Init();
     // // // 此处编写用户代码 例如外设初始化代码等
 	pit_ms_init(PIT_CH, 2, encoder_update);
-	
-
-
-
-
-
+	//pit_ms_init(TIM2_PIT, 5, gyroscope_get_gyro);
 
     // // 此处编写用户代码 例如外设初始化代码等
 
@@ -81,12 +87,13 @@ void main(void)
 		//pid_loop_speed.Ki = seekfree_assistant_parameter[2];
 		//loop_speed_LR(0,target_R);
         //Motor_R(out_R);
+		
+		gyroscope_get_gyro();
 		Motor_R(1800);
-		//Motor_L(1800);
+		Motor_L(1800);
 		//Key_Case();
         //siai_adc_all_sample();
         //adc_normalizing();
-
         //printf("duty_R:%d\n", duty);  // 输出编码器计数信息
 		printf("speed_R:%.2f,out_R:%.2f\n",speed_R,out_R);  // 输出编码器计数信息
 		//printf("dec_speed_loop_R:%.2f\n",dec_speed_loop_R);
@@ -94,20 +101,13 @@ void main(void)
 		//printf("Speed_loop_Kp:%.2f\n",pid_loop_speed.Kp);
 		//printf("Speed_loop_Ki:%.2f\n",pid_loop_speed.Ki);
 		//printf("dec_speed_loop_R:%.2f, out_R:%.2f, T_speed:%d\n",dec_speed_loop_R,out_R,miyan);
-
+		printf("gyro_z_data:%.2f\r\n", avl_gyro_z);
+		gpio_toggle_level(LED1); 
 //        Motor_Control();
 		system_delay_ms(100);
-        
 
-
-
-
-
-
-       
         // 此处编写需要循环执行的代码
-        //printf("\r\nIMU660RB gyro data:  x=%5d, y=%5d, z=%5d\r\n", imu660rb_gyro_x, imu660rb_gyro_y, imu660rb_gyro_z);
-        //printf("\r\nIMU660RB acc data:  x=%5d, y=%5d, z=%5d\r\n", imu660rb_acc_x, imu660rb_acc_y, imu660rb_acc_z);
+
 
     }
 }

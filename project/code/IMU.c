@@ -11,10 +11,10 @@ float avl_gyro_z=0;   //测量
 
 /****************角度获取****************/
 
-void tuoluo_init(void)
+void IMU_Init(void)
 {
 //	icm42688_init();
-	imu660ra_init();
+	imu660rb_init();
 //	icm20602_init();
 
 	
@@ -32,13 +32,13 @@ void gyroscope_get_gyro(void)
 	
 	
 	
-	imu660ra_get_gyro();
-	gyro_z[0] = 0.9*(-imu660ra_gyro_z)+0.1*gyro_z[1];
+	imu660rb_get_gyro();
+	gyro_z[0] = 0.9*(-imu660rb_gyro_z)+0.1*gyro_z[1];
 	
 	
 	
 	gyro_z[1] = gyro_z[0];
-	next_gyro_z = imu660ra_gyro_transition(gyro_z[0]);
+	next_gyro_z = imu660rb_gyro_transition(gyro_z[0]);
 	
 	avl_gyro_z = next_gyro_z - null_drift_z;
 	

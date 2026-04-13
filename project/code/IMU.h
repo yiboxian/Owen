@@ -8,7 +8,7 @@ extern float angle_ringR;
 extern float null_drift_z;
 extern float avl_gyro_z;  //测量-零漂
 
-void tuoluo_init(void);
+void IMU_Init(void);
 void gyroscope_get_gyro(void);		//角速度获取
 void angle_get(void);							//角度获取
 void angle_clear(void);						//角度清零
