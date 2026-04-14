@@ -15,6 +15,7 @@ void IMU_Init(void)
 {
 //	icm42688_init();
 	imu660rb_init();
+	null_drift_calculate();
 //	icm20602_init();
 
 	

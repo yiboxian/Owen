@@ -1,8 +1,8 @@
 #include "bsp_system.h"
 #define KEY1_PIN        IO_P93
-//#define KEY2_PIN        IO_PB3
-//#define KEY3_PIN        IO_PB4
-//#define KEY4_PIN        IO_P32
+#define KEY2_PIN        IO_P92
+#define KEY3_PIN        IO_P91
+#define KEY4_PIN        IO_P90
 
 //#define SWITCH1_PIN     IO_PB0
 //#define SWITCH2_PIN     IO_PB1
@@ -28,12 +28,21 @@ uint8 test1=0;
 void Key_Init(void)
 {
 	gpio_init(KEY1_PIN,GPI,1,GPI_PULL_UP);
-	
+	gpio_init(KEY2_PIN,GPI,1,GPI_PULL_UP);
+	gpio_init(KEY3_PIN,GPI,1,GPI_PULL_UP);
+	gpio_init(KEY4_PIN,GPI,1,GPI_PULL_UP);
+
 }
 void Key_Case(void)
 {
 	key1_last_status = key1_status;
 	key1_status = gpio_get_level(KEY1_PIN);
+	key2_last_status = key2_status;
+	key2_status = gpio_get_level(KEY2_PIN);
+	key3_last_status = key3_status;
+	key3_status = gpio_get_level(KEY3_PIN);
+	key4_last_status = key4_status;
+	key4_status = gpio_get_level(KEY4_PIN);
 	if(key1_status && !key1_last_status)    
 	{
 		key1_flag = 1;
@@ -46,6 +55,33 @@ void Key_Case(void)
             key1_flag = 0;//使用按键之后，应该清除标志位
 			test1++;
         }
+	if(key2_status && !key2_last_status)
+	{
+		key2_flag = 1;
+	}
+	if(key2_flag)
+	{
+		// Handle key2 press event
+		key2_flag = 0;
+	}
+	if(key3_status && !key3_last_status)
+	{
+		key3_flag = 1;
+	}
+	if(key3_flag)
+	{
+		// Handle key3 press event
+		key3_flag = 0;
+	}
+	if(key4_status && !key4_last_status)
+	{
+		key4_flag = 1;
+	}
+	if(key4_flag)
+	{
+		// Handle key4 press event
+		key4_flag = 0;
+	}
 
 
 }
