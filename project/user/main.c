@@ -56,11 +56,11 @@ void main(void)
 	IMU_Init();
 	gpio_init(LED1, GPO, GPIO_HIGH, GPO_PUSH_PULL);
 	Motor_Init();
-	//	my_adc_init();
+	my_adc_init();
 	//	Key_Init();
 	// // // 此处编写用户代码 例如外设初始化代码等
-	//pit_ms_init(PIT_CH, 2, encoder_update);
-	 pit_ms_init(TIM2_PIT, 5, gyroscope_get_gyro);
+	pit_ms_init(TIM1_PIT, 2, encoder_update);
+	pit_ms_init(TIM2_PIT, 5, gyroscope_get_gyro);
 
 	// // 此处编写用户代码 例如外设初始化代码等
 
@@ -77,12 +77,14 @@ void main(void)
 		// Motor_R(out_R);
 
 		
-		Motor_R(1800);
-		Motor_L(1800);
+		// Motor_R(1800);
+		// Motor_L(1800);
 		// Key_Case();
-		// siai_adc_all_sample();
-		// adc_normalizing();
+		siai_adc_all_sample();
+		adc_normalizing();
+		//DEBUG信息输出 例如编码器计数值等//
 		// printf("duty_R:%d\n", duty);  // 输出编码器计数信息
+		//printf("L:%.2f,M:%.2f,R:%.2f\n",L ,M ,R);
 		//printf("speed_R:%.2f,out_R:%.2f\n", speed_R, out_R); // 输出编码器计数信息
 		// printf("dec_speed_loop_R:%.2f\n",dec_speed_loop_R);
 		// printf("err_speed_R:%d,err_speed_R_last:%d\n", err_speed_R,err_speed_R_last);
@@ -91,7 +93,7 @@ void main(void)
 		// printf("dec_speed_loop_R:%.2f, out_R:%.2f, T_speed:%d\n",dec_speed_loop_R,out_R,miyan);
 		printf("gyro_z_data:%.2f\n", avl_gyro_z);
 		gpio_toggle_level(LED1);
-		//        Motor_Control();
+		//Motor_Control();
 		//system_delay_ms(100);
 
 		// 此处编写需要循环执行的代码
