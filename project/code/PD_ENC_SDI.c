@@ -3,13 +3,13 @@
 
 //#define PIT_PRIORITY                    (TIM1_IRQn)               TIM1???ж????????????????????????忴???
 
-#define ENCODER_DIR_1                 	(PWMC_ENCODER)              // ??????????????????????????
-#define ENCODER_DIR_PULSE_1       		(PWMC_ENCODER_CH1P_P40)     // PULSE ?????????
-#define ENCODER_DIR_DIR_1           	(PWMC_ENCODER_CH2P_P42)
+#define ENCODER_DIR_1                 	(PWMA_ENCODER)              // 带方向编码器对应使用的编码器接口 
+#define ENCODER_DIR_PULSE_1            	(PWMA_ENCODER_CH1P_P60)     // PULSE 对应的引脚
+#define ENCODER_DIR_DIR_1              	(PWMA_ENCODER_CH2P_P62)     // DIR 对应的引脚
 
-#define ENCODER_DIR_2                 	(PWMA_ENCODER)              // ?????????????????????????? 
-#define ENCODER_DIR_PULSE_2            	(PWMA_ENCODER_CH1P_P60)     // PULSE ?????????
-#define ENCODER_DIR_DIR_2              	(PWMA_ENCODER_CH2P_P62)     // DIR ?????????
+#define ENCODER_DIR_2                 	(PWMC_ENCODER)              // 带方向编码器对应使用的编码器接口
+#define ENCODER_DIR_PULSE_2       		(PWMC_ENCODER_CH1P_P40)     // PULSE 对应的引脚
+#define ENCODER_DIR_DIR_2           	(PWMC_ENCODER_CH2P_P42)     // DIR 对应的引脚
 
  
 
@@ -24,8 +24,8 @@ int32 distance_text=0;
 
 void ENC_Init(void)
 {
-	encoder_dir_init(ENCODER_DIR_1,ENCODER_DIR_DIR_1,ENCODER_DIR_PULSE_1);
-	encoder_dir_init(ENCODER_DIR_2,ENCODER_DIR_DIR_2,ENCODER_DIR_PULSE_2);
+    encoder_dir_init(ENCODER_DIR_1, ENCODER_DIR_PULSE_1, ENCODER_DIR_DIR_1);   	// 初始化编码器模块与引脚 带方向增量编码器模式
+    encoder_dir_init(ENCODER_DIR_2, ENCODER_DIR_PULSE_2, ENCODER_DIR_DIR_2);    // 初始化编码器模块与引脚 带方向增量编码器模式
 	// pit_ms_init(PIT_CH, 100, pit_handler);
 	//initSlidingAverage(&filter_Left,6);  // 初始化滤波器
 	//initSlidingAverage(&filter_Right,6);
@@ -52,8 +52,8 @@ void ENC_Init(void)
 void encoder_update(void)
 {
 	//0-获取速度&清零
-	speed_R = (0.85f*encoder_get_count(PWMC_ENCODER));
-	speed_L = (0.85f*encoder_get_count(PWMA_ENCODER));
+	speed_L  = (0.85f*encoder_get_count(PWMA_ENCODER));
+	speed_R  = -(0.85f*encoder_get_count(PWMC_ENCODER));
 	
     encoder_clear_count(PWMC_ENCODER);                                		// 清空编码器计数
     encoder_clear_count(PWMA_ENCODER);                                		// 清空编码器计数

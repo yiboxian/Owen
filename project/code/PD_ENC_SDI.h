@@ -37,7 +37,7 @@ void encoder_init(void);
 void encoder_update(void);
 void initSlidingAverage(SlidingAverageFilter* filter, int N);
 void slidingAverage(float now_speed, float* avg_speed, SlidingAverageFilter* filter);
-void pit_handler (void);
+
 
 
 #endif

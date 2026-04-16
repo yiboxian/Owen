@@ -23,8 +23,8 @@ void my_ADC_Init(void);
 
 
 //ADC
-extern float ADC_temp[3];
-extern float L,LM,M,RM,R;
+extern float ADC_temp[4];
+extern float L,LM,RM,R;
 
 extern float adc_v,adc_v_2,adc_v_3,adc_v_4;
 extern float adc_start;

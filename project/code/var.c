@@ -36,7 +36,7 @@ int16 speed_turn = 550;
 int16 speed_ringR = 190;
 float gyro_adv_out = 650;
 
-
+                                                                                                                                                                                                                                                                                                              
 //»·ÄÚÇÐ1
 int16 distance_ringR_1 = 2300;
 int16 gyro_ring_in = 550;
