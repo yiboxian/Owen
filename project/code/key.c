@@ -49,16 +49,18 @@ void Key_Case(void)
 	if (key1_flag)
 	{
 
-		Motor_R(1000);
+		target_L = 100;
+		target_R = 100;
 		key1_flag = 0; // 使用按键之后，应该清除标志位
-		test1++;
 	}
 	if (key2_status && !key2_last_status)
 	{
 		key2_flag = 1;
 	}
 	if (key2_flag)
-	{
+	{	
+		target_L = 0;
+		target_R = 0;
 		// Handle key2 press event
 		key2_flag = 0;
 	}

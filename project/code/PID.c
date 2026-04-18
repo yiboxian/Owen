@@ -4,7 +4,8 @@
 //速度环
 int16 err_speed=0;
 float out_L=0,out_R=0;
-
+uint16 target_R;
+uint16 target_L;
 
 //方向环
 float expect_gyro=0;

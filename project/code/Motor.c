@@ -6,11 +6,11 @@
 
 #define nSleep1             ( IO_P11 )
 #define DIR_1               ( IO_P83 ) 
-#define PWM_1               ( PWMD_CH2_P51 )
+#define PWM_1               ( PWMB_CH3_P02 )
 
 #define nSleep2             ( IO_P04 )  
 #define DIR_2               ( IO_P00 ) 
-#define PWM_2               ( PWMB_CH3_P02 )
+#define PWM_2               ( PWMD_CH2_P51 )
 
 
 #define LED_1				( IO_P85 ) 
