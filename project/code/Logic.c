@@ -1,13 +1,13 @@
 #include "bsp_system.h"
 
 
-//void Electromagnetic_Logic()
-//{   
+void Electromagnetic_Logic()
+{   
 
-//    siai_adc_all_sample();
-//    adc_normalizing();
+   siai_adc_all_sample();
+   adc_normalizing();
 
-//    LRM_fabs = |RM-LM|;
+   LRM_fabs = |RM-LM|;
 //     // 动态权重系数k（基于中间传感器M的值）
 //    if(M>b){k=0.8;}// 强信号区域，重视中间传感器
 //    else if(M<a){k=0.2;}// 弱信号区域，重视两侧传感器
@@ -21,4 +21,17 @@
 
 //    err_Electro = A_ * ( A_Electro + B_Electro ) / (all_Electro);// 最终误差计算
 
-//}
+}
+void Module_Init()
+{
+    // 此处编写模块初始化代码 例如外设初始化代码等
+    seekfree_assistant_init(); // 初始化逐飞助手上位机
+    tft180_init(); // 初始化 TFT180 液晶显示屏
+    Motor_Init(); // 初始化电机控制模块
+    Key_Init(); // 初始化按键输入模块
+    ENC_Init(); // 初始化编码器模块
+    IMU_Init(); // 初始化陀螺仪模块
+    my_ADC_Init();
+
+    // 此处编写其他需要初始化的模块代码
+}

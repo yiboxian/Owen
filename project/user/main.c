@@ -41,8 +41,6 @@ void Pit_funciton(void);
 #define PIT_CH (TIM1_PIT)
 #define LED1 IO_P52
 
-uint16 target_R;
-uint16 target_L;
 // 陀螺仪型号为IMU963RA 因兼容性改为IMU660RB//
 
 void main(void)
@@ -50,19 +48,13 @@ void main(void)
 
 	clock_init(SYSTEM_CLOCK_96M); // 时钟配置及系统初始化<务必保留>
 	debug_init();				  // 调试串口信息初始化
-								  // 逐飞助手初始化
-	seekfree_assistant_init();
+	Module_Init();
 	// 设置DEBUG串口输出
 	seekfree_assistant_interface_init(SEEKFREE_ASSISTANT_DEBUG_UART);
-	ENC_Init();
-	IMU_Init();
 	gpio_init(LED1, GPO, GPIO_HIGH, GPO_PUSH_PULL);
-	Motor_Init();
-	my_adc_init();
-	Key_Init();
 	// 此处编写用户代码 例如外设初始化代码等
 	pit_ms_init(TIM1_PIT, 2, encoder_update);
-	pit_ms_init(TIM2_PIT,2,Pit_funciton);
+	pit_ms_init(TIM2_PIT, 2, Pit_funciton);
 	// pit_ms_init(TIM2_PIT, 5, gyroscope_get_gyro);
 
 	// 此处编写用户代码 例如外设初始化代码等
@@ -71,60 +63,37 @@ void main(void)
 
 	while (1)
 	{
-		
+
 		seekfree_assistant_data_analysis();
-		
-		//pid_loop_speed.Kp = seekfree_assistant_parameter[2];
-		//pid_loop_speed.Ki = seekfree_assistant_parameter[3];
+		TFT_Debug();
 
+		// pid_loop_speed.Kp = seekfree_assistant_parameter[2];
+		// pid_loop_speed.Ki = seekfree_assistant_parameter[3];
 
-		// if (L > 10 ||LM > 10 ||RM > 10 ||R > 10)
-		// {
-//			Motor_R(4000);
-//			Motor_L(4000);
-//			system_delay_ms(1000);
-//			Motor_R(4000);
-//			Motor_L(2000);
-//			system_delay_ms(1000);
-//			Motor_R(0);
-//			Motor_L(0);
-//			while(1)
-//			{}
-				
-		// else
-		// {
-		// 	Motor_R(0);
-		// 	Motor_L(0);
-		// }
-	
+		// 电磁初始化//
 
-	// Key_Case();
-	// 电磁初始化//
-
-	// 电磁初始化//
-	//  printf("duty_R:%d\n", duty);  // 输出编码器计数信息
-	printf("speed_R:%.2f,speed_L:%.2f,out_R:%.2f,out_L:%.2f\n", speed_R,speed_L, out_R,out_L); // 输出编码器计数信息
-	//  printf("dec_speed_loop_R:%.2f\n",dec_speed_loop_R);8
-	//  printf("err_speed_R:%d,err_speed_R_last:%d\n", err_speed_R,err_speed_R_last);
-	 //printf("Speed_loop_Kp:%.2f\n",pid_loop_speed.Kp);
-	 //printf("Speed_loop_Ki:%.2f\n",pid_loop_speed.Ki);
-	// printf("Elect_L:%.2f,Elect_LM:%.2f,Elect_RM:%.2f,Elect_R:%.2f\n", ADC_temp[0], ADC_temp[1], ADC_temp[2], ADC_temp[3]);
-	// printf("dec_speed_loop_R:%.2f, out_R:%.2f, Target_speed:%d\n",dec_speed_loop_R,out_R,target_R);
-	// printf("gyro_z_data:%.2f\n", avl_gyro_z);
-	gpio_toggle_level(LED1);
-	//        Motor_Control();
-	system_delay_ms(100);
-
+		// 电磁初始化//
+		//  printf("duty_R:%d\n", duty);  // 输出编码器计数信息
+		// printf("speed_R:%.2f,speed_L:%.2f,out_R:%.2f,out_L:%.2f\n", speed_R,speed_L, out_R,out_L); // 输出编码器计数信息
+		//  printf("dec_speed_loop_R:%.2f\n",dec_speed_loop_R);8
+		//  printf("err_speed_R:%d,err_speed_R_last:%d\n", err_speed_R,err_speed_R_last);
+		// printf("Speed_loop_Kp:%.2f\n",pid_loop_speed.Kp);
+		// printf("Speed_loop_Ki:%.2f\n",pid_loop_speed.Ki);
+		printf("Elect_L:%.2f,Elect_LM:%.2f,Elect_RM:%.2f,Elect_R:%.2f\n", ADC_temp[0], ADC_temp[1], ADC_temp[2], 1.15 * ADC_temp[3]);
+		// printf("dec_speed_loop_R:%.2f, out_R:%.2f, Target_speed:%d\n",dec_speed_loop_R,out_R,target_R);
+		// printf("gyro_z_data:%.2f\n", avl_gyro_z);
+		gpio_toggle_level(LED1);
+		// Motor_Control();
+		system_delay_ms(100);
 	}
 	// 此处编写需要循环执行的代码
 }
 void Pit_funciton()
 {
-		loop_speed_LR(target_L,target_R);
-		Motor_R(out_R);
-		Motor_L(out_L);
-		Key_Case();
-		//siai_adc_all_sample();
-		//adc_normalizing();
-
+	loop_speed_LR(target_L, target_R);
+	Motor_R(out_R);
+	Motor_L(out_L);
+	Key_Case();
+	siai_adc_all_sample();
+	adc_normalizing();
 }

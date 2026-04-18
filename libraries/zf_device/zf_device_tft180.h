@@ -62,21 +62,21 @@
 #elif (TFT180_USE_INTERFACE==HARDWARE_SPI)
 //====================================================硬件 SPI 驱动====================================================
 	#define TFT180_SPI_SPEED                ((uint32)48 * 1000 * 1000U)             // 硬件 SPI 速率 这里设置为系统时钟二分频
-	#define TFT180_SPI                      (SPI_2)                                 // 硬件 SPI 号
-	#define TFT180_SCL_PIN                  (SPI2_CH4_SCLK_P83)                     // 硬件 SPI SCK 引脚
-	#define TFT180_SDA_PIN                  (SPI2_CH4_MOSI_P81)                     // 硬件 SPI MOSI 引脚
+	#define TFT180_SPI                      (SPI_3)                                 // 硬件 SPI 号
+	#define TFT180_SCL_PIN                  (SPI3_CH2_SCLK_P73)                     // 硬件 SPI SCK 引脚
+	#define TFT180_SDA_PIN                  (SPI3_CH2_MOSI_P71)                     // 硬件 SPI MOSI 引脚
 //====================================================硬件 SPI 驱动====================================================
 #endif
 
 #define TFT180_RES_PIN                  ( IO_P70 )                                  // 液晶复位引脚定义
-#define TFT180_DC_PIN                   ( IO_P71 )                                  // 液晶命令位引脚定义
+#define TFT180_DC_PIN                   ( IO_P72 )                                  // 液晶命令位引脚定义
 #define TFT180_CS_PIN                   ( IO_P35 )                                  // CS 片选引脚
-#define TFT180_BL_PIN                   ( IO_P82 )                                  // 液晶背光引脚定义
+#define TFT180_BL_PIN                   ( IO_P37 )                                  // 液晶背光引脚定义
 
 #define TFT180_RES(x)                   ( P70 = x )
-#define TFT180_DC(x)                    ( P71 = x )
+#define TFT180_DC(x)                    ( P72 = x )
 #define TFT180_CS(x)                    ( P35 = x )
-#define TFT180_BL(x)                    ( P82 = x )
+#define TFT180_BL(x)                    ( P37 = x )
 
 typedef enum
 {

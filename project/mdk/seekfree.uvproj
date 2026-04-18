@@ -914,6 +914,16 @@
               <FileType>5</FileType>
               <FilePath>..\code\Tracing.h</FilePath>
             </File>
+            <File>
+              <FileName>TFT.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\code\TFT.c</FilePath>
+            </File>
+            <File>
+              <FileName>TFT.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\code\TFT.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

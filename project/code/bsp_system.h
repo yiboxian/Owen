@@ -14,7 +14,7 @@
 #include "IMU.h"
 #include "key.h"
 #include "wifi.h"
-
+#include "TFT.h"
 
 #include "PID.h"
 #include "Tracing.h"
