@@ -38,6 +38,7 @@
 // #include "Motor.h"
 // #include "ADC.h"
 void Pit_funciton(void);
+void Pit_Steering_PD(void);
 #define PIT_CH (TIM1_PIT)
 #define LED1 IO_P52
 
@@ -53,7 +54,7 @@ void main(void)
 	seekfree_assistant_interface_init(SEEKFREE_ASSISTANT_DEBUG_UART);
 	gpio_init(LED1, GPO, GPIO_HIGH, GPO_PUSH_PULL);
 	// 此处编写用户代码 例如外设初始化代码等
-	pit_ms_init(TIM1_PIT, 2, encoder_update);
+	pit_ms_init(TIM1_PIT, 5, Pit_Steering_PD);
 	pit_ms_init(TIM2_PIT, 2, Pit_funciton);
 	// pit_ms_init(TIM2_PIT, 5, gyroscope_get_gyro);
 
@@ -67,21 +68,21 @@ void main(void)
 		seekfree_assistant_data_analysis();
 		TFT_Debug();
 		printf("err_position:%.2f\n", err_position);
-		// pid_loop_speed.Kp = seekfree_assistant_parameter[2];
-		// pid_loop_speed.Ki = seekfree_assistant_parameter[3];
-
+		place_Kp = seekfree_assistant_parameter[2];
+		place_kd = seekfree_assistant_parameter[3];
+		printf("place_Kp:%.2f, place_kd:%.2f\n", place_Kp, place_kd);
 		// 电磁初始化//
 
 		// 电磁初始化//
 		//  printf("duty_R:%d\n", duty);  // 输出编码器计数信息
-		// printf("speed_R:%.2f,speed_L:%.2f,out_R:%.2f,out_L:%.2f\n", speed_R,speed_L, out_R,out_L); // 输出编码器计数信息
+		printf("speed_R:%.2f,speed_L:%.2f,out_R:%.2f,out_L:%.2f\n", speed_R,speed_L, out_R,out_L); // 输出编码器计数信息
 		//  printf("dec_speed_loop_R:%.2f\n",dec_speed_loop_R);8
 		//  printf("err_speed_R:%d,err_speed_R_last:%d\n", err_speed_R,err_speed_R_last);
 		// printf("Speed_loop_Kp:%.2f\n",pid_loop_speed.Kp);
 		// printf("Speed_loop_Ki:%.2f\n",pid_loop_speed.Ki);
-				printf("Raw_L:%.2f,Raw_LM:%.2f,Raw_RM:%.2f,Raw_R:%.2f\n", ADC_temp[0], ADC_temp[1], ADC_temp[2], ADC_temp[3]);
-
-		printf("Elect_L:%.2f,Elect_LM:%.2f,Elect_RM:%.2f,Elect_R:%.2f\n", L, LM, RM, R);
+		printf("Raw_L:%.2f,Raw_LM:%.2f,Raw_RM:%.2f,Raw_R:%.2f\n", ADC_temp[0], ADC_temp[1], ADC_temp[2], ADC_temp[3]);
+		printf("place_error:%.2f,place_out:%.2f\n", place_error, place_out);
+		//printf("Elect_L:%.2f,Elect_LM:%.2f,Elect_RM:%.2f,Elect_R:%.2f\n", L, LM, RM, R);
 		// printf("dec_speed_loop_R:%.2f, out_R:%.2f, Target_speed:%d\n",dec_speed_loop_R,out_R,target_R);
 		// printf("gyro_z_data:%.2f\n", avl_gyro_z);
 		gpio_toggle_level(LED1);
@@ -92,10 +93,17 @@ void main(void)
 }
 void Pit_funciton()
 {
-	loop_speed_LR(place_out, -place_out);
+	encoder_update();
+	Electromagnetic_Logic();
+
+	// 0-获取数据
+	loop_speed_LR(place_out/2, -place_out/2);
 	Motor_R(out_R);
 	Motor_L(out_L);
 	Key_Case();
-	siai_adc_all_sample();
-	adc_normalizing();
+}
+void Pit_Steering_PD(void)
+{
+	place_pid(err_position);
+
 }
