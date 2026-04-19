@@ -66,7 +66,7 @@ void main(void)
 
 		seekfree_assistant_data_analysis();
 		TFT_Debug();
-		printf("test1:%d\n", test1);
+		printf("err_position:%.2f\n", err_position);
 		// pid_loop_speed.Kp = seekfree_assistant_parameter[2];
 		// pid_loop_speed.Ki = seekfree_assistant_parameter[3];
 
@@ -92,7 +92,7 @@ void main(void)
 }
 void Pit_funciton()
 {
-	loop_speed_LR(target_L, target_R);
+	loop_speed_LR(place_out, -place_out);
 	Motor_R(out_R);
 	Motor_L(out_L);
 	Key_Case();

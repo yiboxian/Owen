@@ -10,6 +10,27 @@ uint16 target_L;
 //方向环
 float expect_gyro=0;
 float correct_L=0;
+
+float place_error = 0;
+float place_last_error = 0;
+float place_out = 0;
+float place_last_out = 0;
+float place_kp = 0;
+float place_kd = 0;
+float place_gyro_kd = 0;
+
+void place_pid(float error)//方向外环计算pid，函数输入为小车循迹的反馈误差
+{
+    float A= 0;//低通滤波系数,一般可以为0.9 or 0.8
+    place_last_out = place_out;//更新上一次值
+    place_last_error = place_error;//更新上一次值
+    place_error = error;
+	place_out = place_kp * place_error + place_kd * (place_error - place_last_error);
+    //place_out = place_kp * place_error + place_kd * (place_error - place_last_error) + place_gyro_kd * gyro_z;//最后加上角速度kd 与 滤波后的Z轴角速度 或者 原始值（不推荐，噪音比较大） 的乘积
+    place_out = place_out * A + place_last_out * (1-A);
+}
+
+
 //平均速度PI函数//
 void loop_speed(void) 
 {
@@ -94,21 +115,6 @@ void loop_speed_LR(int16 speed_L_t,int16 speed_R_t)
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	
 	//前馈
 //	err_feedforward =  17*(direction_err1[0] - direction_err1[1])													//P
@@ -148,19 +154,19 @@ void direction_return(float err_position)
 	if(expect_gyro>limit_gyro){expect_gyro=limit_gyro;}
 	if(expect_gyro<-limit_gyro){expect_gyro=-limit_gyro;}
 	
-	//2-角速度->角速度环->电机差速(值)
-	err_gyro = expect_gyro - avl_gyro_z;
-	direction_err2[1]=direction_err2[0];
-	direction_err2[0]=err_gyro;
+	// //2-角速度->角速度环->电机差速(值)
+	// err_gyro = expect_gyro - avl_gyro_z;
+	// direction_err2[1]=direction_err2[0];
+	// direction_err2[0]=err_gyro;
 
-	correct_L	=  pid_motor_run.Kp_gyro *  direction_err2[0]
-						 + pid_motor_run.Kd_gyro * (direction_err2[0] - direction_err2[1]);
+	// correct_L	=  pid_motor_run.Kp_gyro *  direction_err2[0]
+	// 					 + pid_motor_run.Kd_gyro * (direction_err2[0] - direction_err2[1]);
 	
 	 
 	
-	if(correct_L>10000){correct_L=10000;}
-	if(correct_L<-10000){correct_L=-10000;}
+	// if(correct_L>10000){correct_L=10000;}
+	// if(correct_L<-10000){correct_L=-10000;}
 
-	correct_L_last = correct_L;
+	// correct_L_last = correct_L;
 
 }

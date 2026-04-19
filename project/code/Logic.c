@@ -1,6 +1,6 @@
 #include "bsp_system.h"
 
-uint8 LRM_fabs = 0;
+float err_position = 0;
 uint8 standby = 0;
 void Electromagnetic_Logic()
 {
@@ -8,7 +8,22 @@ void Electromagnetic_Logic()
     siai_adc_all_sample();
     adc_normalizing();
 
-    LRM_fabs = RM - LM;
+    err_position = L - R;
+    if(err_position > 0)
+    {   
+        // 机器人偏向左侧，调整右轮速度
+        // 例如：右轮速度增加，左轮速度保持不变
+    }
+    else if(err_position < 0)
+    {
+        // 机器人偏向右侧，调整左轮速度
+        // 例如：左轮速度增加，右轮速度保持不变
+    }
+    else
+    {
+        // 机器人处于轨道中心，无需调整
+        // 例如：两轮速度保持相同
+    }
     //     // 动态权重系数k（基于中间传感器M的值）
     //    if(M>b){k=0.8;}// 强信号区域，重视中间传感器
     //    else if(M<a){k=0.2;}// 弱信号区域，重视两侧传感器
