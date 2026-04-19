@@ -66,7 +66,7 @@ void main(void)
 
 		seekfree_assistant_data_analysis();
 		TFT_Debug();
-
+		printf("test1:%d\n", test1);
 		// pid_loop_speed.Kp = seekfree_assistant_parameter[2];
 		// pid_loop_speed.Ki = seekfree_assistant_parameter[3];
 

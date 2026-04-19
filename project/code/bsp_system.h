@@ -18,6 +18,7 @@
 
 #include "PID.h"
 #include "Tracing.h"
+#include "Logic.h"
 
 #include "stdio.h"
 #include "math.h"
