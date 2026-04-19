@@ -147,35 +147,35 @@ void adc_normalizing(void)
 	//	M  = 100*(ADC_temp[2]-0)/(600-0);
 	//  RM = 100*(ADC_temp[3]-0)/(600-0);
 	//	R  = 100*(ADC_temp[4]-0)/(600-0);
-
-	L = 100 * (ADC_temp[0] - 0) / (600 - 0);
-	LM = 100 * (ADC_temp[1] - 0) / (600 - 0);
+	
+	L = Adc_Normalize(ADC_temp[0], 46, 270);
+	LM = Adc_Normalize(ADC_temp[1], 46, 270);
 	// M  = 100*(ADC_temp[1]-0)/(600-0);
-	RM = 100 * (ADC_temp[2] - 0) / (600 - 0);
-	R = 100 * (ADC_temp[3] - 0) / (600 - 0);
+	RM = Adc_Normalize(ADC_temp[2], 46, 270);
+	R = Adc_Normalize(ADC_temp[3], 150, 994);
 
-	// 输入限幅
-	if (L > 100)
-	{
-		L = 100;
-	}
-	if (LM > 100)
-	{
-		LM = 100;
-	}
-	// if (M > 100)
-	// {
-	// M = 100;
-	// }
-	if (RM > 100)
-	{
-		RM = 100;
-	}
-	if (R > 100)
-	{
-		R = 100;
-	}
-}
+// 	// 输入限幅
+// 	if (L > 100)
+// 	{
+// 		L = 100;
+// 	}
+// 	if (LM > 100)
+// 	{
+// 		LM = 100;
+// 	}
+// 	// if (M > 100)
+// 	// {
+// 	// M = 100;
+// 	// }
+// 	if (RM > 100)
+// 	{
+// 		RM = 100;
+// 	}
+// 	if (R > 100)
+// 	{
+// 		R = 100;
+// 	}
+ }
 // 电压采集//
 // 以下电压采集权重需要根据实际情况进行评估//
 float adc_v_sample(float v_next)

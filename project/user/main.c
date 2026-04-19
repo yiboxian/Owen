@@ -79,7 +79,9 @@ void main(void)
 		//  printf("err_speed_R:%d,err_speed_R_last:%d\n", err_speed_R,err_speed_R_last);
 		// printf("Speed_loop_Kp:%.2f\n",pid_loop_speed.Kp);
 		// printf("Speed_loop_Ki:%.2f\n",pid_loop_speed.Ki);
-		printf("Elect_L:%.2f,Elect_LM:%.2f,Elect_RM:%.2f,Elect_R:%.2f\n", ADC_temp[0], ADC_temp[1], ADC_temp[2], 1.15 * ADC_temp[3]);
+				printf("Raw_L:%.2f,Raw_LM:%.2f,Raw_RM:%.2f,Raw_R:%.2f\n", ADC_temp[0], ADC_temp[1], ADC_temp[2], ADC_temp[3]);
+
+		printf("Elect_L:%.2f,Elect_LM:%.2f,Elect_RM:%.2f,Elect_R:%.2f\n", L, LM, RM, R);
 		// printf("dec_speed_loop_R:%.2f, out_R:%.2f, Target_speed:%d\n",dec_speed_loop_R,out_R,target_R);
 		// printf("gyro_z_data:%.2f\n", avl_gyro_z);
 		gpio_toggle_level(LED1);

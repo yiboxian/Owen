@@ -35,6 +35,32 @@ void Module_Init()
 
     // 此处编写其他需要初始化的模块代码
 }
+/**
+ * @brief 限幅保护函数
+ */
+double range_protect(double duty, double min, double max)
+{
+    return duty >= max ? max : (duty <= min ? min : duty);
+}
+
+
+/**
+* @brief 归一化函数，将输入值映射到 1 ~ 100 范围
+* @param value 输入初始电感值（此时为整型）
+* @return double 归一化后的值（1 ~ 100）
+*/
+double Adc_Normalize(int value, double min, double max)
+{
+		double normalized = 0;
+		
+		// 计算归一化值
+		normalized = (double)(value - min) / (max - min) * 100.0f;
+		// 限幅保护，确保返回值在 1 ~ 100 范围内
+		normalized = range_protect(normalized, 1.0, 100.0);
+		
+		return normalized;
+}
+
 void Task_Run()
 {
 
