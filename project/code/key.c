@@ -48,9 +48,6 @@ void Key_Case(void)
 	}
 	if (key1_flag)
 	{
-		test1++;
-		target_L = 100;
-		target_R = 100;
 		key1_flag = 0; // 使用按键之后，应该清除标志位
 	}
 	if (key2_status && !key2_last_status)

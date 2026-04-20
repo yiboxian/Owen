@@ -148,7 +148,7 @@ void adc_normalizing(void)
 	//  RM = 100*(ADC_temp[3]-0)/(600-0);
 	//	R  = 100*(ADC_temp[4]-0)/(600-0);
 	
-	L = Adc_Normalize(ADC_temp[0], 46, 270);
+	L = Adc_Normalize(ADC_temp[0], 46, 470);
 	LM = Adc_Normalize(ADC_temp[1], 46, 270);
 	// M  = 100*(ADC_temp[1]-0)/(600-0);
 	RM = Adc_Normalize(ADC_temp[2], 46, 270);

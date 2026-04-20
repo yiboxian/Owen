@@ -14,7 +14,7 @@ struct PID pid_loop_angle_ring=		{50,0,0   ,16,0,20};				//角度环
 
 struct PID pid_loop_gyro=		  {0,0,0   ,16,0,20};					//角速度环
 
-float limit_gyro = 800;
+float limit_gyro = 50;
 
 
 //误差

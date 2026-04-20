@@ -1,6 +1,11 @@
 #include "bsp_system.h"
 
 float err_position = 0;
+// 转向系数//
+float Small_t = 0.9;
+float Large_t = 1;
+// 转向系数//
+
 uint8 standby = 0;
 void Electromagnetic_Logic()
 {
@@ -9,21 +14,6 @@ void Electromagnetic_Logic()
     adc_normalizing();
 
     err_position = L - R;
-    if(err_position > 0)
-    {   
-        // 机器人偏向左侧，调整右轮速度
-        // 例如：右轮速度增加，左轮速度保持不变
-    }
-    else if(err_position < 0)
-    {
-        // 机器人偏向右侧，调整左轮速度
-        // 例如：左轮速度增加，右轮速度保持不变
-    }
-    else
-    {
-        // 机器人处于轨道中心，无需调整
-        // 例如：两轮速度保持相同
-    }
     //     // 动态权重系数k（基于中间传感器M的值）
     //    if(M>b){k=0.8;}// 强信号区域，重视中间传感器
     //    else if(M<a){k=0.2;}// 弱信号区域，重视两侧传感器
@@ -58,22 +48,21 @@ double range_protect(double duty, double min, double max)
     return duty >= max ? max : (duty <= min ? min : duty);
 }
 
-
 /**
-* @brief 归一化函数，将输入值映射到 1 ~ 100 范围
-* @param value 输入初始电感值（此时为整型）
-* @return double 归一化后的值（1 ~ 100）
-*/
+ * @brief 归一化函数，将输入值映射到 1 ~ 100 范围
+ * @param value 输入初始电感值（此时为整型）
+ * @return double 归一化后的值（1 ~ 100）
+ */
 double Adc_Normalize(int value, double min, double max)
 {
-		double normalized = 0;
-		
-		// 计算归一化值
-		normalized = (double)(value - min) / (max - min) * 100.0f;
-		// 限幅保护，确保返回值在 1 ~ 100 范围内
-		normalized = range_protect(normalized, 1.0, 100.0);
-		
-		return normalized;
+    double normalized = 0;
+
+    // 计算归一化值
+    normalized = (double)(value - min) / (max - min) * 100.0f;
+    // 限幅保护，确保返回值在 1 ~ 100 范围内
+    normalized = range_protect(normalized, 1.0, 100.0);
+
+    return normalized;
 }
 
 void Task_Run()
@@ -86,12 +75,47 @@ void Task_Run()
         standby = null_drift_calculate(); // 零漂解算
         break;
     case 1:
-        /* code */
-        break;
+        // 转向逻辑//
+        speed_target = 10;
 
+        if (err_position > 30)
+        {
+
+            loop_speed_LR( Small_t * expect_gyro, Large_t * expect_gyro);
+            // loop_speed_LR(0, 0);
+
+            // Motor_L(expect_gyro* Large_t);
+            // Motor_R(expect_gyro*Small_t);
+        }
+        else if (err_position < -30)
+        {
+
+
+            // loop_speed_LR(0, 0);
+
+            loop_speed_LR(Large_t * -expect_gyro, Small_t * -expect_gyro);
+
+            // Motor_R(expect_gyro* Large_t);
+        }
+        Motor_L(out_L);
+        Motor_R(out_R);
+        break;
+    case 2:
+        // 此处编写其他需要循环执行的代码 例如任务调度等
     default:
         break;
     }
 
     // 此处编写其他需要循环执行的代码
 }
+
+// 跑出赛道保护//
+void Run_Out_Protect()
+{
+    if (L + LM + RM + R < 20)
+    {
+        Motor_R(0);
+        Motor_L(0);
+    }
+}
+// 跑出赛道保护//

@@ -15,10 +15,6 @@ void TFT_Debug(void)
     tft180_show_float(60, 16 * 4, RM, 3, 2);    // 显示一个16位无符号整数
     tft180_show_string(0, 16 * 5, "R:");  // 显示字符串
     tft180_show_float(60, 16 * 5, R, 3, 2);     // 显示电磁传感器各路数据
-	tft180_show_string(0, 16 * 6, "SpeedKp:");  // 显示字符串
-    tft180_show_float(60, 16 * 6,  pid_loop_speed.Kp, 3, 2);     // 显示电磁传感器各路数据
-	tft180_show_string(0, 16 * 7, "SpeedKi:");  // 显示字符串
-    tft180_show_float(60, 16 * 7,  pid_loop_speed.Ki, 3, 2);     // 显示电磁传感器各路数据
     // tft180_show_uint16(0, 16*1, 111);                	//显示一个16位无符号整数
     // tft180_show_int32(0, 16 * 2, 222, 3);      // 显示一个32位有符号数  并去除无效0
     // tft180_show_int32(0, 16 * 3, -333, 3);     // 显示一个32位有符号数  并去除无效0
