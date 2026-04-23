@@ -22,7 +22,7 @@ float err_dianci=0;
 float e3,e1;
 
 //2-循迹(速度)
-struct PID pid_motor_run;
+struct PID pid_motor_run = {2.0,0,0};
 struct PID pid_loop_speed = {10,3};										//速度环
 struct PID pid_loop_angle;														//角度环
 struct PID pid_loop_angle_start={16,0,0   ,17,0,20};				//角度环

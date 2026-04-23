@@ -1,7 +1,7 @@
 #include "bsp_system.h"
 
-#define WIFI_SSID_TEST          "PLA"
-#define WIFI_PASSWORD_TEST      "woaiwuxie1" // 如果需要连接的WIFI 没有密码则需要将 这里 替换为 NULL
+#define WIFI_SSID_TEST          "212"
+#define WIFI_PASSWORD_TEST      "yiboxian123" // 如果需要连接的WIFI 没有密码则需要将 这里 替换为 NULL
 
 
 
