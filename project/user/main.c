@@ -77,7 +77,7 @@ void main(void)
 
 		TFT_Debug();
 
-	
+		Motor_fuya(5000);
 		printf("err_position:%.2f\n", err_position);
 		printf("out_L:%.2f,out_R:%.2f\n", out_L,out_R);
 		printf("expect_gyro:%.2f\n", expect_gyro);
