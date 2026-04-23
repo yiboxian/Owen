@@ -113,3 +113,4 @@ void Motor_R(int16 duty)
         dir = 0;
         pwm_set_duty(PWM_3,-duty);
     }
+}
