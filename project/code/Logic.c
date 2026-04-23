@@ -2,7 +2,7 @@
 
 float err_position = 0;
 // 转向系数//
-float Small_t = 0.9;
+float Small_t = 0.8;
 float Large_t = 1;
 // 转向系数//
 
@@ -31,6 +31,7 @@ void Module_Init()
 {
     // 此处编写模块初始化代码 例如外设初始化代码等
     seekfree_assistant_init(); // 初始化逐飞助手上位机
+    //Wifi_Init();
     tft180_init();             // 初始化 TFT180 液晶显示屏
     Motor_Init();              // 初始化电机控制模块
     Key_Init();                // 初始化按键输入模块
@@ -78,22 +79,22 @@ void Task_Run()
         // 转向逻辑//
         speed_target = 10;
 
-        if (err_position > 30)
+        if (err_position > 0)
         {
 
-            loop_speed_LR( Small_t * expect_gyro, Large_t * expect_gyro);
-            // loop_speed_LR(0, 0);
+            // loop_speed_LR( (Small_t * expect_gyro)/2, (Large_t * expect_gyro)/2);
+            loop_speed_LR(Small_t * expect_gyro, Large_t * expect_gyro);
 
             // Motor_L(expect_gyro* Large_t);
             // Motor_R(expect_gyro*Small_t);
         }
-        else if (err_position < -30)
+        else if (err_position < 0)
         {
 
 
-            // loop_speed_LR(0, 0);
-
             loop_speed_LR(Large_t * -expect_gyro, Small_t * -expect_gyro);
+
+            // loop_speed_LR((Large_t * -expect_gyro)/2, (Small_t * -expect_gyro)/2);
 
             // Motor_R(expect_gyro* Large_t);
         }

@@ -79,11 +79,12 @@ void main(void)
 
 		Motor_fuya(5000);
 		printf("err_position:%.2f\n", err_position);
-		printf("out_L:%.2f,out_R:%.2f\n", out_L,out_R);
+		printf("out_L:%.2f,out_R:%.2f,Speed_L:%.2f,Speed_R:%.2f\n", out_L,out_R,speed_L,speed_R);
 		printf("expect_gyro:%.2f\n", expect_gyro);
-		pid_motor_run.Kp = seekfree_assistant_parameter[2];
-		pid_motor_run.Kd = seekfree_assistant_parameter[3];
-		printf("place_Kp:%.2f, place_kd:%.2f\n", pid_motor_run.Kp, pid_motor_run.Kd);
+		//方向环调试信息//
+		//pid_motor_run.Kp = seekfree_assistant_parameter[2];
+		//pid_motor_run.Kd = seekfree_assistant_parameter[3];
+		// printf("place_Kp:%.2f, place_kd:%.2f\n", pid_motor_run.Kp, pid_motor_run.Kd);
 		// 电磁初始化//
 
 		// 电磁初始化//

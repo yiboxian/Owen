@@ -112,10 +112,10 @@
 		//Êä³ö
 		out_R += dec_speed_loop_R;
 		
-	  if(out_L>5000 ){out_L=5000; }
-		if(out_L<-5000){out_L=-5000;}
-		if(out_R>5000 ){out_R=5000; }
-		if(out_R<-5000){out_R=-5000;}
+	  if(out_L>4000 ){out_L=4000; }
+		if(out_L<-4000){out_L=-4000;}
+		if(out_R>4000 ){out_R=4000; }
+		if(out_R<-4000){out_R=-4000;}
 	}
 
 

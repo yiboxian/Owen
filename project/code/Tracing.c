@@ -4,7 +4,7 @@
 
 int16 speed_target = 0;
 
-struct PID pid_motor_run;
+struct PID pid_motor_run = {2.0,0,1};
 
 struct PID pid_loop_speed = {10,0.5};
 // struct PID pid_motor_run;
