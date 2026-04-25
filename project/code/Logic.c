@@ -6,6 +6,12 @@ float Small_t = 0.8;
 float Large_t = 1;
 // 转向系数//
 
+//
+float deviation = 0;
+float A_Deviation = 1;
+float B_Deviation = 1;
+float C_Deviation = 1;
+//
 uint8 standby = 0;
 void Electromagnetic_Logic()
 {
@@ -65,7 +71,11 @@ double Adc_Normalize(int value, double min, double max)
 
     return normalized;
 }
-
+void deviation_calculation()
+{
+    deviation = (A_Deviation*(L - R) + B_Deviation*(RM - LM))/(A_Deviation*(L+R)+C_Deviation*fabs(LM - RM))*100;
+    // 此处编写偏差计算代码 例如循迹误差计算等
+}
 void Task_Run()
 {
 
