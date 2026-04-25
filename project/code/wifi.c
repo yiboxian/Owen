@@ -40,3 +40,14 @@ void Wifi_Init(void)
 
 }
     // 此处编写wifi模块初始化代码
+void Wifi_oscilloscope(void)
+{
+
+    // 此处编写wifi模块示波器代码 例如发送数据至服务器等
+    seekfree_assistant_oscilloscope_data.dat[0] = speed_L;
+    seekfree_assistant_oscilloscope_data.dat[1] = speed_R;
+    seekfree_assistant_oscilloscope_data.channel_num = 2; // 设置本次需要发送几个通道的数据
+    seekfree_assistant_oscilloscope_send(&seekfree_assistant_oscilloscope_data); // 发送数据至服务器
+    // 解析上位机发送过来的参数，解析后数据会存放在seekfree_assistant_oscilloscope_data数组中，可以通过在线调试的方式查看数据
+    // 例程为了方便因此写在了主循环，实际使用中推荐放到周期中断等位置，需要确保函数能够及时的被调用，调用周期不超过20ms
+}

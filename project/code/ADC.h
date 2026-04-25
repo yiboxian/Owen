@@ -3,7 +3,7 @@
 void my_ADC_Init(void);
 
 
-#define ADC_Sample_Num 7
+#define ADC_Sample_Num 5
 
 //新版
 // #define ADC_L_CH 			ADC_CH0_P10
@@ -24,24 +24,20 @@ void my_ADC_Init(void);
 
 //ADC
 extern float ADC_temp[4];
+extern float filtered_results[4];
 extern float L,LM,RM,R;
 
 extern float adc_v,adc_v_2,adc_v_3,adc_v_4;
 extern float adc_start;
-
-//算法
-extern uint16 ADC_original[3][ADC_Sample_Num];
-
-
 
 
 void my_adc_init(void);
 //电磁采样
 uint16 adc_sample_a(adc_channel_enum ch);		
 uint16 adc_sample_b(adc_channel_enum ch);
-
+int Median_Average_Filter(float* arr, int times);
 uint16 adc_sample(adc_channel_enum ch);			
-
+void Update_All_Inductors(float* final_values);
 
 uint16 adc_mid_sample(adc_channel_enum ch);//三次取中值
 

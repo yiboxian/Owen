@@ -16,7 +16,7 @@ uint8 standby = 0;
 void Electromagnetic_Logic()
 {
 
-    siai_adc_all_sample();
+
     adc_normalizing();
 
     err_position = L - R;
