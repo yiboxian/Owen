@@ -88,11 +88,11 @@ void Task_Run()
         break;
     case 1: // —≠º£‘À––//
         speed_target = 10;
-        if (deviation < -25)
-        {
-            standby = 2;
-        }
-        else
+        // if (deviation < -25)
+        // {
+        //     standby = 2;
+        // }
+        // else
         {
             if (expect_gyro > 0)
             {
@@ -102,7 +102,7 @@ void Task_Run()
                 // Motor_L(expect_gyro* Large_t);
                 // Motor_R(expect_gyro*Small_t);
             }
-            else if (expect_gyro < 0)
+            else
             {
 
                 loop_speed_LR(-expect_gyro, expect_gyro);

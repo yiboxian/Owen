@@ -75,8 +75,6 @@ void main(void)
 		printf("expect_gyro:%.2f\n",expect_gyro);
 		printf("speed_R:%.2f,speed_L:%.2f,out_R:%.2f,out_L:%.2f\n", speed_R,speed_L, out_R,out_L); // 输出编码器计数信息
 		Motor_fuya();
-		Motor_L(3000);
-		Motor_R(3000);
 		// 	printf("Raw_L:%.2f,Raw_LM:%.2f,Raw_RM:%.2f,Raw_R:%.2f\n", ADC_temp[0], ADC_temp[1],ADC_temp[2],ADC_temp[3]);
 		//	printf("Raw_L:%.2f,Raw_LM:%.2f,Raw_RM:%.2f,Raw_R:%.2f\n", L, LM, RM, R);
 		//printf("err_position:%.2f\n", err_position);
@@ -86,7 +84,7 @@ void main(void)
 		// printf("gyro_z_data:%.2f\n", avl_gyro_z);
 		gpio_toggle_level(LED1);
 		// Motor_Control();
-		system_delay_ms(200);
+		system_delay_ms(200);	
 	}
 	// 此处编写需要循环执行的代码
 }
@@ -97,12 +95,12 @@ void Pit_funciton()
 	// 0-获取数据
 	// loop_speed_LR(20, 20);
 	// loop_speed_LR(0, 0);
-	 //Task_Run();
+	 Task_Run();
 
 	// Motor_R(out_R);
 	// Motor_L(out_L);
 	Key_Case();
-	//Run_Out_Protect();
+	Run_Out_Protect();
 }
 void Pit_Steering_PD(void)
 {
