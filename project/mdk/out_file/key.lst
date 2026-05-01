@@ -1,0 +1,120 @@
+C251 COMPILER V5.60.0,  key                                                                29/04/26  14:50:10  PAGE 1   
+
+
+C251 COMPILER V5.60.0, COMPILATION OF MODULE key
+OBJECT MODULE PLACED IN .\out_file\key.obj
+COMPILER INVOKED BY: D:\Software\Keil5\C251\BIN\C251.EXE ..\code\key.c LARGE FLOAT64 ROM(HUGE) WARNINGLEVEL(3) OPTIMIZE(
+                    -0,SIZE) BROWSE INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\
+                    -zf_driver;..\user;..\code;..\..\libraries\zf_components\stc32g_usb_lib;..\..\libraries\zf_components\seekfree_assistant)
+                    - DEBUG PRINT(.\out_file\key.lst) OBJECT(.\out_file\key.obj) 
+
+stmt  level    source
+
+    1          #include "bsp_system.h"
+    2          #define KEY1_PIN IO_P93
+    3          #define KEY2_PIN IO_P92
+    4          #define KEY3_PIN IO_P91
+    5          #define KEY4_PIN IO_P90
+    6          
+    7          // #define SWITCH1_PIN     IO_PB0
+    8          // #define SWITCH2_PIN     IO_PB1
+    9          int8 key1_status = 1;
+   10          uint8 key2_status = 1;
+   11          uint8 key3_status = 1;
+   12          uint8 key4_status = 1;
+   13          
+   14          // 上一次开关状态变量
+   15          uint8 key1_last_status;
+   16          uint8 key2_last_status;
+   17          uint8 key3_last_status;
+   18          uint8 key4_last_status;
+   19          
+   20          // 开关标志位
+   21          uint8 key1_flag;
+   22          uint8 key2_flag;
+   23          uint8 key3_flag;
+   24          uint8 key4_flag;
+   25          
+   26          uint8 test1 = 0;
+   27          
+   28          void Key_Init(void)
+   29          {
+   30   1              gpio_init(KEY1_PIN, GPI, 1, GPI_PULL_UP);
+   31   1              gpio_init(KEY2_PIN, GPI, 1, GPI_PULL_UP);
+   32   1              gpio_init(KEY3_PIN, GPI, 1, GPI_PULL_UP);
+   33   1              gpio_init(KEY4_PIN, GPI, 1, GPI_PULL_UP);
+   34   1      }
+   35          void Key_Case(void)
+   36          {
+   37   1              key1_last_status = key1_status;
+   38   1              key1_status = gpio_get_level(KEY1_PIN);
+   39   1              key2_last_status = key2_status;
+   40   1              key2_status = gpio_get_level(KEY2_PIN);
+   41   1              key3_last_status = key3_status;
+   42   1              key3_status = gpio_get_level(KEY3_PIN);
+   43   1              key4_last_status = key4_status;
+   44   1              key4_status = gpio_get_level(KEY4_PIN);
+   45   1              if (key1_status && !key1_last_status)
+   46   1              {
+   47   2                      key1_flag = 1;
+   48   2              }
+   49   1              if (key1_flag)
+   50   1              {
+   51   2                      key1_flag = 0; // 使用按键之后，应该清除标志位
+   52   2              }
+   53   1              if (key2_status && !key2_last_status)
+   54   1              {
+   55   2                      key2_flag = 1;
+   56   2              }
+C251 COMPILER V5.60.0,  key                                                                29/04/26  14:50:10  PAGE 2   
+
+   57   1              if (key2_flag)
+   58   1              {       
+   59   2                      target_L = 0;
+   60   2                      target_R = 0;
+   61   2                      // Handle key2 press event
+   62   2                      key2_flag = 0;
+   63   2              }
+   64   1              if (key3_status && !key3_last_status)
+   65   1              {
+   66   2                      key3_flag = 1;
+   67   2              }
+   68   1              if (key3_flag)
+   69   1              {
+   70   2                      // Handle key3 press event
+   71   2                      key3_flag = 0;
+   72   2              }
+   73   1              if (key4_status && !key4_last_status)
+   74   1              {
+   75   2                      key4_flag = 1;
+   76   2              }
+   77   1              if (key4_flag)
+   78   1              {
+   79   2                      // Handle key4 press event
+   80   2                      key4_flag = 0;
+   81   2              }
+   82   1      }
+
+
+Module Information          Static   Overlayable
+------------------------------------------------
+  code size            =    ------     ------
+  ecode size           =       314     ------
+  data size            =    ------     ------
+  idata size           =    ------     ------
+  pdata size           =    ------     ------
+  xdata size           =        13     ------
+  xdata-const size     =    ------     ------
+  edata size           =    ------     ------
+  bit size             =    ------     ------
+  ebit size            =    ------     ------
+  bitaddressable size  =    ------     ------
+  ebitaddressable size =    ------     ------
+  far data size        =    ------     ------
+  huge data size       =    ------     ------
+  const size           =    ------     ------
+  hconst size          =        30     ------
+End of Module Information.
+
+
+C251 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

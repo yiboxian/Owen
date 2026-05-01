@@ -1,0 +1,150 @@
+C251 COMPILER V5.60.0,  Motor                                                              01/05/26  15:23:40  PAGE 1   
+
+
+C251 COMPILER V5.60.0, COMPILATION OF MODULE Motor
+OBJECT MODULE PLACED IN .\out_file\Motor.obj
+COMPILER INVOKED BY: D:\Software\Keil5\C251\BIN\C251.EXE ..\code\Motor.c LARGE FLOAT64 ROM(HUGE) WARNINGLEVEL(3) OPTIMIZ
+                    -E(0,SIZE) BROWSE INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\librarie
+                    -s\zf_driver;..\user;..\code;..\..\libraries\zf_components\stc32g_usb_lib;..\..\libraries\zf_components\seekfree_assistan
+                    -t) DEBUG PRINT(.\out_file\Motor.lst) OBJECT(.\out_file\Motor.obj) 
+
+stmt  level    source
+
+    1          
+    2          #include "bsp_system.h"
+    3          // Motor para Control Area//
+    4          #define MAX_DUTY (30) // 最大 MAX_DUTY% 占空比
+    5          
+    6          #define nSleep1 (IO_P11)
+    7          #define DIR_1 (IO_P83)
+    8          #define PWM_1 (PWMB_CH3_P02)
+    9          
+   10          #define nSleep2 (IO_P04)
+   11          #define DIR_2 (IO_P00)
+   12          #define PWM_2 (PWMD_CH2_P51)
+   13          
+   14          #define nSleep3 (IO_P50)
+   15          #define DIR_3 (IO_P32)
+   16          #define PWM_3 (PWMB_CH4_P34)
+   17          
+   18          #define LED_1 (IO_P85)
+   19          #define LED_2 (IO_P87)
+   20          
+   21          int16 fy_duty = 0;
+   22          int8 dir = 1;
+   23          int16 duty = 0;
+   24          // 在时钟初始化前负压电机GPIO拉低，PWM初始占空比调整为10000//
+   25          // Motor para Control Area//
+   26          void Motor_Init(void)
+   27          {
+   28   1          
+   29   1          gpio_init(nSleep1, GPO, GPIO_LOW, GPO_PUSH_PULL);  // 先拉低
+   30   1          gpio_init(nSleep2, GPO, GPIO_LOW, GPO_PUSH_PULL);
+   31   1          
+   32   1          // PWM初始化
+   33   1          
+   34   1          // 延时后使能（重要时序）
+   35   1          gpio_init(DIR_1, GPO, GPIO_HIGH, GPO_PUSH_PULL);   // GPIO 初始化为输出 默认上拉输出高
+   36   1          pwm_init(PWM_1, 17000, 0);                         // PWM 通道初始化频率 17KHz 占空比初始为 0
+   37   1      
+   38   1          gpio_init(DIR_2, GPO, GPIO_HIGH, GPO_PUSH_PULL);   // GPIO 初始化为输出 默认上拉输出高
+   39   1          pwm_init(PWM_2, 17000, 0);                         // PWM 通道初始化频率 17KHz 占空比初始为 0
+   40   1      
+   41   1          gpio_init(DIR_3, GPO, GPIO_HIGH, GPO_PUSH_PULL);   // GPIO 初始化为输出 默认上拉输出高
+   42   1          pwm_init(PWM_3, 17000, 0);                         // PWM 通道初始化频率 17KHz 占空比初始为 0
+   43   1      system_delay_ms(20);
+   44   1                  gpio_init(nSleep1, GPO, GPIO_HIGH, GPO_PUSH_PULL); // GPIO 初始化为输出 默认上拉输出高
+   45   1                  gpio_init(nSleep2, GPO, GPIO_HIGH, GPO_PUSH_PULL); // GPIO 初始化为输出 默认上拉输出高
+   46   1                  gpio_init(nSleep3, GPO, GPIO_HIGH, GPO_PUSH_PULL); // GPIO 初始化为输出 默认上拉输出高
+   47   1      
+   48   1      }
+   49          
+   50          void Motor_R(int16 duty)
+   51          {
+   52   1          if (duty > 9900)
+   53   1          {
+   54   2              duty = 9900;
+   55   2          }
+   56   1          if (duty < -9900)
+C251 COMPILER V5.60.0,  Motor                                                              01/05/26  15:23:40  PAGE 2   
+
+   57   1          {
+   58   2              duty = -9900;
+   59   2          }
+   60   1      
+   61   1          if (duty >= 0)
+   62   1          {
+   63   2              gpio_set_level(DIR_1, GPIO_HIGH); // DIR输出高电平
+   64   2              pwm_set_duty(PWM_1, duty);
+   65   2          }
+   66   1          else
+   67   1          {
+   68   2              gpio_set_level(DIR_1, GPIO_LOW); // DIR输出高电平
+   69   2              pwm_set_duty(PWM_1, -duty);
+   70   2          }
+   71   1      
+   72   1      }
+   73          void Motor_L(int16 duty)
+   74          {   
+   75   1          if (duty > 9900)
+   76   1          {
+   77   2              duty = 9900;
+   78   2          }
+   79   1          if (duty < -9900)
+   80   1          {
+   81   2              duty = -9900;
+   82   2          }
+   83   1      
+   84   1          if (duty >= 0)
+   85   1          {
+   86   2              gpio_set_level(DIR_2, GPIO_HIGH); // DIR输出高电平
+   87   2              pwm_set_duty(PWM_2, duty);
+   88   2          }
+   89   1          else
+   90   1          {
+   91   2              gpio_set_level(DIR_2, GPIO_LOW); // DIR输出低电平
+   92   2              pwm_set_duty(PWM_2, -duty);
+   93   2          }
+   94   1      
+   95   1      }
+   96          void Motor_fuya(void)
+   97          {
+   98   1      
+   99   1          gpio_set_level(DIR_3, GPIO_HIGH);                 // DIR输出高电平
+  100   1          pwm_set_duty(PWM_3, fy_duty * (PWM_DUTY_MAX / 100)); // 计算占空比
+  101   1      
+  102   1          if (dir) // 根据方向判断计数方向 本例程仅作参考
+  103   1          {
+  104   2              fy_duty++;               // 正向计数
+  105   2              if (fy_duty >= MAX_DUTY) // 达到最大值
+  106   2                  fy_duty = MAX_DUTY;  // 变更计数方向
+  107   2      
+  108   2              // dir = 0;
+  109   2          }
+  110   1      }
+
+
+Module Information          Static   Overlayable
+------------------------------------------------
+  code size            =    ------     ------
+  ecode size           =       592     ------
+  data size            =    ------     ------
+  idata size           =    ------     ------
+  pdata size           =    ------     ------
+  xdata size           =         9     ------
+  xdata-const size     =    ------     ------
+  edata size           =    ------     ------
+  bit size             =    ------     ------
+C251 COMPILER V5.60.0,  Motor                                                              01/05/26  15:23:40  PAGE 3   
+
+  ebit size            =    ------     ------
+  bitaddressable size  =    ------     ------
+  ebitaddressable size =    ------     ------
+  far data size        =    ------     ------
+  huge data size       =    ------     ------
+  const size           =    ------     ------
+  hconst size          =        20     ------
+End of Module Information.
+
+
+C251 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

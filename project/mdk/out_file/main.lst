@@ -1,0 +1,155 @@
+C251 COMPILER V5.60.0,  main                                                               01/05/26  15:28:44  PAGE 1   
+
+
+C251 COMPILER V5.60.0, COMPILATION OF MODULE main
+OBJECT MODULE PLACED IN .\out_file\main.obj
+COMPILER INVOKED BY: D:\Software\Keil5\C251\BIN\C251.EXE ..\user\main.c LARGE FLOAT64 ROM(HUGE) WARNINGLEVEL(3) OPTIMIZE
+                    -(0,SIZE) BROWSE INCDIR(..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries
+                    -\zf_driver;..\user;..\code;..\..\libraries\zf_components\stc32g_usb_lib;..\..\libraries\zf_components\seekfree_assistant
+                    -) DEBUG PRINT(.\out_file\main.lst) OBJECT(.\out_file\main.obj) 
+
+stmt  level    source
+
+    1          /********************************************************************************************************
+             -*************
+    2           * STC32G144K Opensourec Library ¼´£¨STC32G144K ¿ªÔ´¿â£©ÊÇÒ»¸ö»ùÓÚ¹Ù·½ SDK ½Ó¿ÚµÄµÚÈý·½¿ªÔ´¿â
+    3           * Copyright (c) 2025 SEEKFREE Öð·É¿Æ¼¼
+    4           *
+    5           * ±¾ÎÄ¼þÊÇSTC32G144K¿ªÔ´¿âµÄÒ»²¿·Ö
+    6           *
+    7           * STC32G144K ¿ªÔ´¿â ÊÇÃâ·ÑÈí¼þ
+    8           * Äú¿ÉÒÔ¸ù¾Ý×ÔÓÉÈí¼þ»ù½ð»á·¢²¼µÄ GPL£¨GNU General Public License£¬¼´ GNUÍ¨ÓÃ¹«¹²Ðí¿ÉÖ¤£©µÄÌõ¿î
+    9           * ¼´ GPL µÄµÚ3°æ£¨¼´ GPL3.0£©»ò£¨ÄúÑ¡ÔñµÄ£©ÈÎºÎºóÀ´µÄ°æ±¾£¬ÖØÐÂ·¢²¼ºÍ/»òÐÞ¸ÄËü
+   10           *
+   11           * ±¾¿ªÔ´¿âµÄ·¢²¼ÊÇÏ£ÍûËüÄÜ·¢»Ó×÷ÓÃ£¬µ«²¢Î´¶ÔÆä×÷ÈÎºÎµÄ±£Ö¤
+   12           * ÉõÖÁÃ»ÓÐÒþº¬µÄÊÊÏúÐÔ»òÊÊºÏÌØ¶¨ÓÃÍ¾µÄ±£Ö¤
+   13           * ¸ü¶àÏ¸½ÚÇë²Î¼û GPL
+   14           *
+   15           * ÄúÓ¦¸ÃÔÚÊÕµ½±¾¿ªÔ´¿âµÄÍ¬Ê±ÊÕµ½Ò»·Ý GPL µÄ¸±±¾
+   16           * Èç¹ûÃ»ÓÐ£¬Çë²ÎÔÄ<https://www.gnu.org/licenses/>
+   17           *
+   18           * ¶îÍâ×¢Ã÷£º
+   19           * ±¾¿ªÔ´¿âÊ¹ÓÃ GPL3.0 ¿ªÔ´Ðí¿ÉÖ¤Ð­Òé ÒÔÉÏÐí¿ÉÉêÃ÷ÎªÒëÎÄ°æ±¾
+   20           * Ðí¿ÉÉêÃ÷Ó¢ÎÄ°æÔÚ libraries/doc ÎÄ¼þ¼ÐÏÂµÄ GPL3_permission_statement.txt ÎÄ¼þÖÐ
+   21           * Ðí¿ÉÖ¤¸±±¾ÔÚ libraries ÎÄ¼þ¼ÐÏÂ ¼´¸ÃÎÄ¼þ¼ÐÏÂµÄ LICENSE ÎÄ¼þ
+   22           * »¶Ó­¸÷Î»Ê¹ÓÃ²¢´«²¥±¾³ÌÐò µ«ÐÞ¸ÄÄÚÈÝÊ±±ØÐë±£ÁôÖð·É¿Æ¼¼µÄ°æÈ¨ÉùÃ÷£¨¼´±¾ÉùÃ÷£©
+   23           *
+   24           * ÎÄ¼þÃû³Æ
+   25           * ¹«Ë¾Ãû³Æ          ³É¶¼Öð·É¿Æ¼¼ÓÐÏÞ¹«Ë¾
+   26           * °æ±¾ÐÅÏ¢          ²é¿´ libraries/doc ÎÄ¼þ¼ÐÄÚ version ÎÄ¼þ °æ±¾ËµÃ÷
+   27           * ¿ª·¢»·¾³          MDK FOR C251
+   28           * ÊÊÓÃÆ½Ì¨          STC32G144K
+   29           * µêÆÌÁ´½Ó          https://seekfree.taobao.com/
+   30           *
+   31           * ÐÞ¸Ä¼ÇÂ¼
+   32           * ÈÕÆÚ              ×÷Õß           ±¸×¢
+   33           * 2025-11-20        ´óW            first version
+   34           ********************************************************************************************************
+             -************/
+   35          #include "bsp_system.h"
+   36          // #include "PD_ENC_SDI.h"
+   37          // #include "var.h"
+   38          // #include "Motor.h"
+   39          // #include "ADC.h"
+   40          void Pit_funciton(void);
+   41          void Pit_Steering_PD(void);
+   42          #define PIT_CH (TIM1_PIT)
+   43          #define LED1 IO_P52
+   44          
+   45          // ÍÓÂÝÒÇÐÍºÅÎªIMU963RA Òò¼æÈÝÐÔ¸ÄÎªIMU660RB//
+   46          
+   47          void main(void)
+   48          {
+   49   1      
+   50   1              clock_init(SYSTEM_CLOCK_96M); // Ê±ÖÓÅäÖÃ¼°ÏµÍ³³õÊ¼»¯<Îñ±Ø±£Áô>
+   51   1              debug_init();                             // µ÷ÊÔ´®¿ÚÐÅÏ¢³õÊ¼»¯
+   52   1              Module_Init();
+   53   1      
+   54   1              // ÉèÖÃDEBUG´®¿ÚÊä³ö
+C251 COMPILER V5.60.0,  main                                                               01/05/26  15:28:44  PAGE 2   
+
+   55   1              seekfree_assistant_interface_init(SEEKFREE_ASSISTANT_DEBUG_UART);
+   56   1              gpio_init(LED1, GPO, GPIO_HIGH, GPO_PUSH_PULL);
+   57   1              // ´Ë´¦±àÐ´ÓÃ»§´úÂë ÀýÈçÍâÉè³õÊ¼»¯´úÂëµÈ
+   58   1              pit_ms_init(TIM1_PIT, 5, Pit_Steering_PD);
+   59   1              pit_ms_init(TIM2_PIT, 2, Pit_funciton);
+   60   1              // pit_ms_init(TIM2_PIT, 5, gyroscope_get_gyro);
+   61   1      
+   62   1              // ´Ë´¦±àÐ´ÓÃ»§´úÂë ÀýÈçÍâÉè³õÊ¼»¯´úÂëµÈ
+   63   1      
+   64   1              // ´Ë´¦±àÐ´ÓÃ»§´úÂë ÀýÈçd\n", duty);  // Êä³ö±àÂëÆ÷¼ÆÊýÐÅÏ¢
+   65   1                      // printf("Speed_loop_Kp:%.2f\n",pid_loop_speed.Kp);
+   66   1                      // printf("Speed_loop_Ki:%.2f\n",pid_loop_speed.Ki);
+   67   1      
+   68   1              while (1)
+   69   1              {
+   70   2      
+   71   2                      seekfree_assistant_data_analysis();
+   72   2      
+   73   2                      //TFT_Debug();
+   74   2                      //printf("duty:%d",duty);
+   75   2                      printf("expect_gyro:%.2f\n",expect_gyro);
+   76   2                      printf("speed_R:%.2f,speed_L:%.2f,out_R:%.2f,out_L:%.2f\n", speed_R,speed_L, out_R,out_L); // Êä³ö±àÂëÆ
+             -÷¼ÆÊýÐÅÏ¢
+   77   2                      Motor_fuya();
+   78   2                      Motor_L(3000);
+   79   2                      Motor_R(3000);
+   80   2                      //      printf("Raw_L:%.2f,Raw_LM:%.2f,Raw_RM:%.2f,Raw_R:%.2f\n", ADC_temp[0], ADC_temp[1],ADC_temp[2],ADC_
+             -temp[3]);
+   81   2                      //      printf("Raw_L:%.2f,Raw_LM:%.2f,Raw_RM:%.2f,Raw_R:%.2f\n", L, LM, RM, R);
+   82   2                      //printf("err_position:%.2f\n", err_position);
+   83   2                      //pid_motor_run.Kp = seekfree_assistant_parameter[2];
+   84   2                      //pid_motor_run.Kd = seekfree_assistant_parameter[3];
+   85   2                      // printf("place_Kp:%.2f, place_kd:%.2f\n", pid_motor_run.Kp, pid_motor_run.Kd);
+   86   2                      // printf("gyro_z_data:%.2f\n", avl_gyro_z);
+   87   2                      gpio_toggle_level(LED1);
+   88   2                      // Motor_Control();
+   89   2                      system_delay_ms(200);
+   90   2              }
+   91   1              // ´Ë´¦±àÐ´ÐèÒªÑ­»·Ö´ÐÐµÄ´úÂë
+   92   1      }
+   93          void Pit_funciton()
+   94          {
+   95   1              encoder_update();
+   96   1              Electromagnetic_Logic();
+   97   1              // 0-»ñÈ¡Êý¾Ý
+   98   1              // loop_speed_LR(20, 20);
+   99   1              // loop_speed_LR(0, 0);
+  100   1               //Task_Run();
+  101   1      
+  102   1              // Motor_R(out_R);
+  103   1              // Motor_L(out_L);
+  104   1              Key_Case();
+  105   1              //Run_Out_Protect();
+  106   1      }
+  107          void Pit_Steering_PD(void)
+  108          {
+  109   1              direction_return(deviation);
+  110   1      
+  111   1      }
+
+
+Module Information          Static   Overlayable
+------------------------------------------------
+  code size            =    ------     ------
+  ecode size           =       478     ------
+  data size            =    ------     ------
+  idata size           =    ------     ------
+C251 COMPILER V5.60.0,  main                                                               01/05/26  15:28:44  PAGE 3   
+
+  pdata size           =    ------     ------
+  xdata size           =    ------     ------
+  xdata-const size     =    ------     ------
+  edata size           =    ------     ------
+  bit size             =    ------     ------
+  ebit size            =    ------     ------
+  bitaddressable size  =    ------     ------
+  ebitaddressable size =    ------     ------
+  far data size        =    ------     ------
+  huge data size       =    ------     ------
+  const size           =    ------     ------
+  hconst size          =        69     ------
+End of Module Information.
+
+
+C251 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

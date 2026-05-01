@@ -1,0 +1,119 @@
+#include "bsp_system.h"
+
+
+//#define PIT_PRIORITY                    (TIM1_IRQn)               TIM1???ж????????????????????????忴???
+
+#define ENCODER_DIR_1                 	(PWMA_ENCODER)              // 带方向编码器对应使用的编码器接口 
+#define ENCODER_DIR_PULSE_1            	(PWMA_ENCODER_CH1P_P60)     // PULSE 对应的引脚
+#define ENCODER_DIR_DIR_1              	(PWMA_ENCODER_CH2P_P62)     // DIR 对应的引脚
+
+#define ENCODER_DIR_2                 	(PWMC_ENCODER)              // 带方向编码器对应使用的编码器接口
+#define ENCODER_DIR_PULSE_2       		(PWMC_ENCODER_CH1P_P40)     // PULSE 对应的引脚
+#define ENCODER_DIR_DIR_2           	(PWMC_ENCODER_CH2P_P42)     // DIR 对应的引脚
+
+ 
+
+
+
+float speed_L=0,speed_R=0,speed_avl=0;
+float speed_L_next,speed_R_next,speed_avl_next;
+float lastspeed_L=0,lastspeed_R=0;
+int32 distance_text=0;
+
+
+
+void ENC_Init(void)
+{
+    encoder_dir_init(ENCODER_DIR_1, ENCODER_DIR_PULSE_1, ENCODER_DIR_DIR_1);   	// 初始化编码器模块与引脚 带方向增量编码器模式
+    encoder_dir_init(ENCODER_DIR_2, ENCODER_DIR_PULSE_2, ENCODER_DIR_DIR_2);    // 初始化编码器模块与引脚 带方向增量编码器模式
+	// pit_ms_init(PIT_CH, 100, pit_handler);
+	//initSlidingAverage(&filter_Left,6);  // 初始化滤波器
+	//initSlidingAverage(&filter_Right,6);
+}
+
+// 	   slidingAverage((float)-encoder_data_dir_1, &speed_L, &filter_Left);
+//     slidingAverage((float)encoder_data_dir_2, &speed_R, &filter_Right);
+
+
+//SlidingAverageFilter filter_Left;
+//SlidingAverageFilter filter_Right;
+
+void encoder_update(void)
+{
+	//0-获取速度&清零
+	speed_L  = (0.85f*encoder_get_count(PWMA_ENCODER));
+	speed_R  = -(0.85f*encoder_get_count(PWMC_ENCODER));
+	
+    encoder_clear_count(PWMC_ENCODER);                                		// 清空编码器计数
+    encoder_clear_count(PWMA_ENCODER);                                		// 清空编码器计数
+	//1-一阶低通滤波
+	speed_R=(0.2*speed_R + 0.8*lastspeed_R);
+	speed_L=(0.2*speed_L + 0.8*lastspeed_L);
+	lastspeed_L = speed_L;
+	lastspeed_R = speed_R;
+	 
+	speed_avl = (speed_L + speed_R)/2;
+	
+	distance_text += (int32)speed_avl;
+}
+//滤波方案2?//
+//void encoder_update(void)
+//{
+//	//0-获取速度&清零
+//	speed_R_next = (float)-encoder_get_count(TIM0_ENCOEDER);
+//	speed_L_next = (float)-encoder_get_count(TIM3_ENCOEDER);
+//	
+//	encoder_clear_count(TIM3_ENCOEDER);
+//	encoder_clear_count(TIM0_ENCOEDER);
+//	//1-滑动平均滤波
+//	slidingAverage(speed_L_next,&speed_L, &filter_Left);
+//	slidingAverage(speed_R_next,&speed_R, &filter_Right);
+
+//	//2-实际速度及其距离
+//	speed_avl_next = (speed_R_next + speed_L_next)/2;
+//	speed_avl = (speed_L + speed_R)/2;
+//	
+//	
+//	distance_text += (int32)speed_avl;
+//}
+
+// void initSlidingAverage(SlidingAverageFilter* filter, int N) {
+// 	 uint8 Win_i=0;
+//     if (N > MAX_WINDOW_SIZE) {
+//         N = MAX_WINDOW_SIZE; // 限制窗口大小不能超过最大值
+//     }
+
+//     for (Win_i = 0; Win_i < MAX_WINDOW_SIZE; Win_i++) {
+//         filter->buffer[Win_i] = 0.0f;
+//     }
+//     filter->sum = 0.0f;
+//     filter->index = 0;
+//     filter->count = 0;
+//     filter->window_size = N;
+// }
+
+// void slidingAverage(float now_speed, float* avg_speed, SlidingAverageFilter* filter) {
+//     // 从和中减去即将被替换的旧值
+//     filter->sum -= filter->buffer[filter->index];
+
+//     // 将新的值插入缓冲区
+//     filter->buffer[filter->index] = now_speed;
+
+//     // 更新和
+//     filter->sum += now_speed;
+
+//     // 更新索引，使其循环回到起始位置
+//     filter->index = (filter->index + 1) % filter->window_size;
+
+//     // 如果窗口没有满，增加计数
+//     if (filter->count < filter->window_size) {
+//         filter->count++;
+//     }
+
+//     // 计算并返回当前窗口的平均值
+//     *avg_speed = filter->sum / filter->count;
+
+//void pit_handler (void)
+//{
+//    
+//}
