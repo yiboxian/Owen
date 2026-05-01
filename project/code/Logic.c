@@ -98,14 +98,14 @@ void Task_Run()
             {
 
                 // loop_speed_LR( (Small_t * expect_gyro)/2, (Large_t * expect_gyro)/2);
-                loop_speed_LR(expect_gyro, -expect_gyro);
+                loop_speed_LR(0, 0);
                 // Motor_L(expect_gyro* Large_t);
                 // Motor_R(expect_gyro*Small_t);
             }
             else
             {
 
-                loop_speed_LR(-expect_gyro, expect_gyro);
+                loop_speed_LR(0, 0);
                 // loop_speed_LR((Large_t * -expect_gyro)/2, (Small_t * -expect_gyro)/2);
 
                 // Motor_R(expect_gyro* Large_t);
